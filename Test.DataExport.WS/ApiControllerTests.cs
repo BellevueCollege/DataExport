@@ -64,5 +64,25 @@ namespace Test.DataExport.WS
 			ViewResult actual = target.Index() as ViewResult;
 			Assert.IsNotNull(actual);
 		}
+
+		/// <summary>
+		/// 
+		///</summary>
+		[TestMethod]
+		public void TestExport_Maxient()
+		{
+			ApiController api = new ApiController();
+			int expected = 1;
+
+			ViewResult view = api.Export(expected) as ViewResult;
+			Assert.IsNotNull(view);
+			
+			object model = view.Model;
+			Assert.IsNotNull(model);
+
+			int actual = Int32.Parse(model.ToString());
+			Assert.AreEqual(expected, actual);
+		}
+
 	}
 }

@@ -23,7 +23,7 @@ namespace DataExport.WS.Controllers
 		/// <remarks>
 		/// This constructor initializes the <see cref="BaseController"/>, which provides common
 		/// functionality like populating <i>ViewBag.Version</i> with the <see cref="Version"/>
-		/// of this MVC application.
+		/// of the current MVC application.
 		/// </remarks>
 		public ApiController() : base(Assembly.GetExecutingAssembly())
 		{
@@ -40,5 +40,15 @@ namespace DataExport.WS.Controllers
 
       return View();
     }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public ActionResult Export(int id)
+		{
+			return View("ExportResult", 0);
+		}
   }
 }
