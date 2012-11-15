@@ -72,7 +72,7 @@ namespace Test.DataExport.WS
 		public void TestExport_Maxient()
 		{
 			ApiController api = new ApiController();
-			int expected = 1;
+			string expected = "maxient";
 
 			ViewResult view = api.Export(expected) as ViewResult;
 			Assert.IsNotNull(view);
@@ -80,7 +80,7 @@ namespace Test.DataExport.WS
 			object model = view.Model;
 			Assert.IsNotNull(model);
 
-			int actual = Int32.Parse(model.ToString());
+			string actual = model.ToString();
 			Assert.AreEqual(expected, actual);
 		}
 

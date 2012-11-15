@@ -15,6 +15,8 @@ namespace DataExport.WS.Controllers
   public class ApiController : BaseController
   {
 		private ILog _log = LogManager.GetCurrentClassLogger();
+		// (ExporterConfig)ConfigurationManager.GetSection(ExporterConfig.GetSectionName())
+		private IList<IExporter> _exporters = new List<IExporter>() {new Exporter() {Name = "maxient"}};
 
 		#region Initialization
 		/// <summary>
@@ -46,9 +48,33 @@ namespace DataExport.WS.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public ActionResult Export(int id)
+		public ActionResult Export(string id)
 		{
-			return View("ExportResult", 0);
+			IEnumerable<IExporter> e =  _exporters.Where(x => x.Name == id);
+
+			if (e.Count() > 0)
+			{
+				IExporter exporter = _exporters.Take(1).Single();
+
+				string data = exporter.Export();
+
+				if (string.IsNullOrWhiteSpace(data))
+				{
+					_log.Warn(m => m("Exporter '{0}' returned an empty string.", id));
+				}
+				else
+				{
+					// TODO: display an appropriate success response
+					return View("ExportResult", model: id);
+				}
+			}
+			else
+			{
+				_log.Warn(m => m("No exporter was found for '{0}'", id));
+			}
+
+			// TODO: display an appropriate failure response
+			return View("ExportResult", model: string.Empty);
 		}
   }
 }
