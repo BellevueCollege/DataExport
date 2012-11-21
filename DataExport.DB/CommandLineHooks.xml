@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!---->
+
+<!-- 
+This is a preset config file; any changes you make to it will be discarded when you launch SQL Source Control.
+
+To keep any changes, you must save them as a new config file in the default location: 
+ %USERPROFILE%\AppData\Local\Red Gate\SQL Source Control 2\CommandLineHooks
+ 
+ Do not store any usernames, passwords, or other sensitive data in this config file. The contents of the config file
+ will be checked into your source control repository and may, with your consent, be sent to Red Gate if SQL Source Control
+ crashes.
+-->
+
+<HooksConfig version="1" type="HooksConfig">
+  <Name>Git</Name>
+  <Commands type="Commands" version="2">
+    <element>
+      <key type="string">GetLatest</key>
+      <value version="1" type="GenericHookCommand">
+        <CommandLine></CommandLine>
+        <Verify>exitCode == 0</Verify>
+      </value>
+    </element>
+    <element>
+      <key type="string">Add</key>
+      <value version="1" type="GenericHookCommand">
+        <CommandLine>git add ($Files)</CommandLine>
+        <Verify>exitCode == 0</Verify>
+      </value>
+    </element>
+    <element>
+      <key type="string">Edit</key>
+      <value version="1" type="GenericHookCommand">
+        <CommandLine></CommandLine>
+        <Verify>exitCode == 0</Verify>
+      </value>
+    </element>
+    <element>
+      <key type="string">Delete</key>
+      <value version="1" type="GenericHookCommand">
+        <CommandLine>git rm ($Files)</CommandLine>
+        <Verify>exitCode == 0</Verify>
+      </value>
+    </element>
+    <element>
+      <key type="string">Commit</key>
+      <value version="1" type="GenericHookCommand">
+        <CommandLine>git commit -F "($MessageFile)" -o "($ScriptsFolder)\"</CommandLine>
+        <Verify>exitCode == 0</Verify>
+      </value>
+    </element>
+    <element>
+      <key type="string">Revert</key>
+      <value version="1" type="GenericHookCommand">
+        <CommandLine>git checkout "($ScriptsFolder)\"</CommandLine>
+        <Verify>exitCode == 0</Verify>
+      </value>
+    </element>
+  </Commands>
+</HooksConfig>
