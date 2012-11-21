@@ -16,7 +16,14 @@ namespace DataExport.WS.Controllers
   {
 		private ILog _log = LogManager.GetCurrentClassLogger();
 		// (ExporterConfig)ConfigurationManager.GetSection(ExporterConfig.GetSectionName())
-		private IList<IExporter> _exporters = new List<IExporter>() {new Exporter() {Name = "maxient"}};
+		private IList<IExporter> _exporters = new List<IExporter>()
+		                                      	{
+		                                      			new Exporter()
+		                                      				{
+		                                      						Name = "maxient",
+		                                      						Data = (new SqlDataInput()),
+		                                      				}
+		                                      	};
 
 		#region Initialization
 		/// <summary>
@@ -72,7 +79,6 @@ namespace DataExport.WS.Controllers
 			{
 				_log.Warn(m => m("No exporter was found for '{0}'", id));
 			}
-
 			// TODO: display an appropriate failure response
 			return View("ExportResult", model: string.Empty);
 		}

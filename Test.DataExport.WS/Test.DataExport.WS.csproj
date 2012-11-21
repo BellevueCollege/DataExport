@@ -71,6 +71,8 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web" />
@@ -94,13 +96,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllerTests.cs" />
+    <Compile Include="CsvFormatTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlDataInputTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataExport.WS\DataExport.WS.csproj">
       <Project>{A89D45F3-9CFD-4031-8113-0C2AB28EAC41}</Project>
       <Name>DataExport.WS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

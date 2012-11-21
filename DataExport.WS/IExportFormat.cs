@@ -1,9 +1,9 @@
 ﻿using System.Data;
 
-namespace DataExport.WS.Controllers
+namespace DataExport.WS
 {
 	public interface IExportFormat
 	{
-		string Export(DataSet ds);
+		string Serialize(DataSet ds);
 	}
 }
