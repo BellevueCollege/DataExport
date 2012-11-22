@@ -25,6 +25,9 @@
     <Content Include="RedGateDatabaseInfo.xml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Views\dbo.vw_Maxient_Feed1.sql">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assemblies\" />
