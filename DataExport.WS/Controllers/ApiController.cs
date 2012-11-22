@@ -16,12 +16,14 @@ namespace DataExport.WS.Controllers
   {
 		private ILog _log = LogManager.GetCurrentClassLogger();
 		// (ExporterConfig)ConfigurationManager.GetSection(ExporterConfig.GetSectionName())
-		private IList<IExporter> _exporters = new List<IExporter>()
+		// TODO: replace the following initializations with loading from config settings (above)
+		private IList<IExporter> _exporters = new List<IExporter>
 		                                      	{
-		                                      			new Exporter()
+		                                      			new Exporter
 		                                      				{
 		                                      						Name = "maxient",
 		                                      						Data = (new SqlDataInput()),
+																											Format = new CsvFormat {Separator = "|"}
 		                                      				}
 		                                      	};
 
@@ -57,13 +59,14 @@ namespace DataExport.WS.Controllers
 		/// <returns></returns>
 		public ActionResult Export(string id)
 		{
-			IEnumerable<IExporter> e =  _exporters.Where(x => x.Name == id);
+			IEnumerable<IExporter> e =  _exporters.Where(x => x.Name.ToUpper() == id.ToUpper());
 
 			if (e.Count() > 0)
 			{
 				IExporter exporter = _exporters.Take(1).Single();
 
 				string data = exporter.Export();
+				_log.Trace(m => m("Export result:\n{0}", data));
 
 				if (string.IsNullOrWhiteSpace(data))
 				{
@@ -71,16 +74,14 @@ namespace DataExport.WS.Controllers
 				}
 				else
 				{
-					// TODO: display an appropriate success response
-					return View("ExportResult", model: id);
+					return View("ExportResult", true);
 				}
 			}
 			else
 			{
 				_log.Warn(m => m("No exporter was found for '{0}'", id));
 			}
-			// TODO: display an appropriate failure response
-			return View("ExportResult", model: string.Empty);
+			return View("ExportResult", false);
 		}
   }
 }

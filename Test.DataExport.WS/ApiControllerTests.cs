@@ -72,16 +72,14 @@ namespace Test.DataExport.WS
 		public void TestExport_Maxient()
 		{
 			ApiController api = new ApiController();
-			string expected = "maxient";
-
-			ViewResult view = api.Export(expected) as ViewResult;
+			ViewResult view = api.Export("maxient") as ViewResult;
 			Assert.IsNotNull(view);
 			
 			object model = view.Model;
 			Assert.IsNotNull(model);
 
-			string actual = model.ToString();
-			Assert.AreEqual(expected, actual);
+			bool result = Boolean.Parse(model.ToString());
+			Assert.IsTrue(result, "Export call reports a failure.");
 		}
 
 	}

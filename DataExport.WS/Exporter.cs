@@ -1,30 +1,24 @@
 ﻿using System;
+using System.Data;
 
 namespace DataExport.WS.Controllers
 {
 	public class Exporter : IExporter
 	{
-		public IExportFormat Format
-		{
-			get {throw new NotImplementedException();}
-			set {throw new NotImplementedException();}
-		}
+		public IExportFormat Format {get;set;}
 
-		public string Name
-		{
-			get {throw new NotImplementedException();}
-			set {throw new NotImplementedException();}
-		}
+		public string Name {get;set;}
 
-		public IDataInput Data
-		{
-			get {throw new NotImplementedException();}
-			set {throw new NotImplementedException();}
-		}
+		public IDataInput Data {get;set;}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public string Export()
 		{
-			throw new NotImplementedException();
+			DataSet ds = Data.Import();
+			return Format.Serialize(ds);
 		}
 	}
 }

@@ -1,3 +1,11 @@
-@model string
+@model bool
 
-<p>Results placeholder for ID: @Model</p>
+@if (Model)
+{
+	<h3>Export complete.</h3>
+}
+else
+{
+	<h3>Error</h3>
+	<p>We were unable to complete the export request. Please see the logs for more information.</p>
+}
