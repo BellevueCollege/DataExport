@@ -59,19 +59,19 @@ namespace DataExport.WS.Controllers
 		/// <returns></returns>
 		public ActionResult Export(string id)
 		{
-			IEnumerable<IExporter> e =  _exporters.Where(x => x.Name.ToUpper() == id.ToUpper());
-
-			if (e.Count() > 0)
+			IEnumerable<IExporter> exporters =  _exporters.Where(x => x.Name.ToUpper() == id.ToUpper());
+			int exporterCount = exporters.Count();
+			
+			if (exporterCount > 0)
 			{
+				if (_log.IsWarnEnabled && exporterCount > 1) {
+					_log.Warn(m => m("Multiple exporters found with the name '{0}' - only one will be used.", id));
+				}
+
 				IExporter exporter = _exporters.Take(1).Single();
 
 				string csv = exporter.Export();
 				_log.Trace(m => m("Export result:\n{0}", csv));
-
-				// TODO: add config settings for saving file
-				csv.ToFile("output.txt");
-
-				// TODO: implement uploading via SSH
 
 				if (string.IsNullOrWhiteSpace(csv))
 				{
@@ -79,7 +79,13 @@ namespace DataExport.WS.Controllers
 				}
 				else
 				{
-					return View("ExportResult", true);
+					// TODO: implement uploading via SSH
+
+			
+					// TODO: add config settings for saving file
+					bool saved = csv.ToFile("output.txt");
+
+					return View("ExportResult", saved);
 				}
 			}
 			else
