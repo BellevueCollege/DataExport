@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 using Common.Logging;
+using CtcApi.Extensions;
 using CtcApi.Web.Mvc;
 
 namespace DataExport.WS.Controllers
@@ -65,10 +65,15 @@ namespace DataExport.WS.Controllers
 			{
 				IExporter exporter = _exporters.Take(1).Single();
 
-				string data = exporter.Export();
-				_log.Trace(m => m("Export result:\n{0}", data));
+				string csv = exporter.Export();
+				_log.Trace(m => m("Export result:\n{0}", csv));
 
-				if (string.IsNullOrWhiteSpace(data))
+				// TODO: add config settings for saving file
+				csv.ToFile("output.txt");
+
+				// TODO: implement uploading via SSH
+
+				if (string.IsNullOrWhiteSpace(csv))
 				{
 					_log.Warn(m => m("Exporter '{0}' returned an empty string.", id));
 				}

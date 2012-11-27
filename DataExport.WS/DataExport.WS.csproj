@@ -92,6 +92,8 @@
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="CsvFormat.cs" />
     <Compile Include="CsvFormatConfig.cs" />
+    <Compile Include="CtcApi\ByteExtensions.cs" />
+    <Compile Include="CtcApi\StringExtensionsTmp1.cs" />
     <Compile Include="SqlInputConfig.cs" />
     <Compile Include="SqlDataInput.cs" />
     <Compile Include="Exporter.cs" />
