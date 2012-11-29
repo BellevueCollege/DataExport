@@ -13,7 +13,7 @@ namespace DataExport.WS.Controllers
 	/// 
 	/// </summary>
   public class ApiController : BaseController
-  {
+	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
 		// (ExporterConfig)ConfigurationManager.GetSection(ExporterConfig.GetSectionName())
 		// TODO: replace the following initializations with loading from config settings (above)
@@ -21,11 +21,20 @@ namespace DataExport.WS.Controllers
 		                                      	{
 		                                      			new Exporter
 		                                      				{
-		                                      						Name = "maxient",
-		                                      						Data = (new SqlDataInput()),
+		                                      						Name = "maxient1",
+		                                      						Data = new SqlDataInput {CmdText = "SELECT * FROM vw_Maxient_Feed1"},
 																											Format = new CsvFormat {Separator = "|"}
-		                                      				}
-		                                      	};
+		                                      				},
+																								new Exporter
+																									{
+																											Name = "maxient2",
+																											Data = new SqlDataInput {CmdText = "SELECT * FROM vw_Maxient_Feed2 ORDER BY [SID]"},
+																											Format = new XslFormat
+																											         	{
+																											         			TemplateFile = "Maxient2.StudentSchedule.xslt"
+																											         	}
+																									}
+  	                                      	};
 
 		#region Initialization
 		/// <summary>
@@ -68,7 +77,7 @@ namespace DataExport.WS.Controllers
 					_log.Warn(m => m("Multiple exporters found with the name '{0}' - only one will be used.", id));
 				}
 
-				IExporter exporter = _exporters.Take(1).Single();
+				IExporter exporter = exporters.Take(1).Single();
 
 				string csv = exporter.Export();
 				_log.Trace(m => m("Export result:\n{0}", csv));
@@ -85,6 +94,7 @@ namespace DataExport.WS.Controllers
 					// TODO: add config settings for saving file
 					bool saved = csv.ToFile("output.txt");
 
+					// TODO: provide option to return output filestream
 					return View("ExportResult", saved);
 				}
 			}

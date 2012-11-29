@@ -93,6 +93,7 @@
     <Compile Include="ActiveDirectoryRoleProvider.cs" />
     <Compile Include="AuthorizeFromConfigAttribute.cs" />
     <Compile Include="Controllers\ApiController.cs" />
+    <Compile Include="XslFormat.cs" />
     <Compile Include="CsvFormat.cs" />
     <Compile Include="CsvFormatConfig.cs" />
     <Compile Include="CtcApi\ByteExtensions.cs" />
@@ -112,6 +113,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="XslFormatConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Readme\Elmah.txt" />
@@ -133,6 +135,7 @@
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="lib\CtcApi.dll" />
     <None Include="Views\Api\ExportResult.cshtml" />
+    <Content Include="Templates\Maxient2.StudentSchedule.xslt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

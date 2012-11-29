@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D208C868-5CA4-4537-A074-1746417570D6}"
 	ProjectSection(SolutionItems) = preProject
 		DataExport.vsmdi = DataExport.vsmdi
+		DataSetExample.xml = DataSetExample.xml
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection

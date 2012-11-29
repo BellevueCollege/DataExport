@@ -65,14 +65,25 @@ namespace Test.DataExport.WS
 			Assert.IsNotNull(actual);
 		}
 
-		/// <summary>
-		/// 
-		///</summary>
 		[TestMethod]
-		public void TestExport_Maxient()
+		public void TestExport_Maxient_Feed1_Demographics()
 		{
 			ApiController api = new ApiController();
-			ViewResult view = api.Export("maxient") as ViewResult;
+			ViewResult view = api.Export("maxient1") as ViewResult;
+			Assert.IsNotNull(view);
+			
+			object model = view.Model;
+			Assert.IsNotNull(model);
+
+			bool result = Boolean.Parse(model.ToString());
+			Assert.IsTrue(result, "Export call reports a failure.");
+		}
+
+		[TestMethod]
+		public void TestExport_Maxient_Feed2_Schedule()
+		{
+			ApiController api = new ApiController();
+			ViewResult view = api.Export("maxient2") as ViewResult;
 			Assert.IsNotNull(view);
 			
 			object model = view.Model;

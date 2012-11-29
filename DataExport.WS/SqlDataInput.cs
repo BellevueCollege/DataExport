@@ -14,7 +14,6 @@ namespace DataExport.WS
 		public SqlDataInput()
 		{
 			// TODO: replace these initialization values with .config properties
-			CmdText = "SELECT * FROM vw_Maxient_Feed1";
 			Connection = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 		}
 

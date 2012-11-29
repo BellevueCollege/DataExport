@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- This is the XML produced by an ADO.NET DataSet object -->
+<NewDataSet>
+	<Table1>
+		<SID>954999991</SID>
+		<CourseID>ART 101</CourseID>
+		<Section>A</Section>
+		<Room>R104</Room>
+		<Instructor>Instructor, Anne B.</Instructor>
+	</Table1>
+	<Table1>
+		<SID>954999991</SID>
+		<CourseID>ENGL&amp;101</CourseID>
+		<Section>OAS</Section>
+		<Room>B230</Room>
+		<Instructor>Teacher, Carol D</Instructor>
+	</Table1>
+	<Table1>
+		<SID>954999991</SID>
+		<CourseID>BUS&amp; 201</CourseID>
+		<Section>A</Section>
+		<Room>N204</Room>
+		<Instructor>Frank</Instructor>
+	</Table1>
+	<Table1>
+		<SID>954999992</SID>
+		<CourseID>CS&amp; 100</CourseID>
+		<Section>B</Section>
+		<Room>C220</Room>
+		<Instructor>Professor, Eric</Instructor>
+	</Table1>
+	<Table1>
+		<SID>954999992</SID>
+		<CourseID>ENGL&amp;101</CourseID>
+		<Section>OAS</Section>
+		<Room>B230</Room>
+		<Instructor>Teacher, Carol D</Instructor>
+	</Table1>
+</NewDataSet>
