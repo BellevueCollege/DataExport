@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Web.Mvc;
 using Common.Logging;
 using CtcApi.Extensions;
 using CtcApi.Web.Mvc;
+using DataExport.Web.Properties;
 
 namespace DataExport.WS.Controllers
 {
@@ -92,10 +94,17 @@ namespace DataExport.WS.Controllers
 
 			
 					// TODO: add config settings for saving file
-					bool saved = csv.ToFile("output.txt");
 
-					// TODO: provide option to return output filestream
-					return View("ExportResult", saved);
+
+					/***********************************************************************************************
+					 * WARNING: Only return file when testing. The downloaded contents could contain sensitive data.
+					 ***********************************************************************************************/
+					if (Settings.Default.AllowFileDownload)
+					{
+						// Generated file is returned to the browser/client
+						return new FileContentResult(Encoding.UTF8.GetBytes(csv), "text/plain");
+					}
+					return View("ExportResult", true);
 				}
 			}
 			else

@@ -71,7 +71,7 @@ namespace Test.DataExport.WS
 			string templatesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\DataExport.WS\Templates");
 			formatter.TemplateFile = Path.Combine(templatesFolder, "Maxient2.StudentSchedule.xslt");
 
-			DataTable table = new DataTable();
+			DataTable table = new DataTable("Table");
 			table.Columns.Add("SID", typeof(string));
 			table.Columns.Add("CourseID", typeof(string));
 			table.Columns.Add("Section", typeof(string));

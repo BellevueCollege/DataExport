@@ -38,6 +38,8 @@ namespace DataExport.WS
 			    using (DbCommand cmd = conn.CreateCommand())
 			    {
 			      cmd.CommandText = CmdText;
+						// TODO: make the database time out configurable. Perhaps per-DataInput?
+			    	cmd.CommandTimeout = 60;
 
 			      IDbDataAdapter adapter = factory.CreateDataAdapter();
 				

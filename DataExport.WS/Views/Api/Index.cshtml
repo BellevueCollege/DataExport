@@ -1,10 +1,11 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manual testing of Data Export";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <ul>
-	<li>@Html.ActionLink("Maxient Data Feed 1 - Demographic data", "Export", new {id = "maxient"})</li>
+	<li>@Html.ActionLink("Maxient Data Feed 1 - Demographic data", "Export", new {id = "maxient1"})</li>
+	<li>@Html.ActionLink("Maxient Data Feed 2 - Schedule data", "Export", new {id = "maxient2"})</li>
 </ul>
 
