@@ -25,6 +25,12 @@
     <Content Include="RedGateDatabaseInfo.xml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Security\Roles\db_datareader.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Security\Users\CAMPUS_SSOUTHVM1-N216K%24.sql">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Views\dbo.vw_Maxient_Feed1.sql">
       <SubType>Content</SubType>
     </Content>
