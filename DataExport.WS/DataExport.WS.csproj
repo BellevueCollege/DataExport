@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Readme\Elmah.txt" />
+    <Content Include="Error.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\jquery-ui.css" />
