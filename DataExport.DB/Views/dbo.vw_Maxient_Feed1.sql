@@ -15,7 +15,11 @@ AS
 		,ISNULL(s.LastName, '') AS "Last Name"
 		,ISNULL(s.FirstName, '') AS "First Name"
 		,ISNULL(s.MiddleInitial, '') AS "Middle Name"
-		,s.DOB AS "Date of Birth"
+		,CASE ISNULL(s.DOB, '')
+			WHEN '' THEN ''
+			-- format: YYYY-MM-DD
+			ELSE CAST(YEAR(s.DOB) AS VARCHAR) +'-'+ RIGHT('0'+ CAST(MONTH(s.DOB) AS VARCHAR), 2) +'-'+ RIGHT('0'+ CAST(DAY(s.DOB) AS VARCHAR), 2)
+		 END AS "Date of Birth"
 		,CASE s.Sex
 			WHEN 'F' THEN 'Female'
 			WHEN 'M' THEN 'Male'
