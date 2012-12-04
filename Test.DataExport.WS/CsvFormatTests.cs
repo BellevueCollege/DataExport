@@ -65,7 +65,7 @@ namespace Test.DataExport.WS
 			string expected = "954999991|_teststu01|Student01";
 
 			CsvFormat target = new CsvFormat();
-			target.Separator = "|";
+			target.FieldSeparator = "|";
 
 			DataTable table = new DataTable();
 			table.Columns.Add("SID", typeof(string));
@@ -79,6 +79,86 @@ namespace Test.DataExport.WS
 				ds.Tables.Add(table);
 
 				actual = target.Serialize(ds);
+			}
+			Assert.AreEqual(string.Concat(expected, Environment.NewLine), actual);
+		}
+
+		[TestMethod()]
+		public void VerifyTrailingCharsRemoved()
+		{
+			string actual = string.Empty;
+			string[] record = {"954999991", "_teststu01  ", "Student01,"};
+
+			CsvFormat target = new CsvFormat();
+			target.FieldSeparator = "|";
+			char[] trimCharsEnd = new[] {',', ' '};
+			target.FieldTrimEndChars = trimCharsEnd;
+
+			DataTable table = new DataTable();
+			table.Columns.Add("SID", typeof(string));
+			table.Columns.Add("Username", typeof(string));
+			table.Columns.Add("Last Name", typeof(string));
+
+			table.Rows.Add(record);
+
+			using (DataSet ds = new DataSet())
+			{
+				ds.Tables.Add(table);
+
+				actual = target.Serialize(ds);
+			}
+
+			string expected = string.Empty;
+			foreach (string s in record)
+			{
+				if (string.IsNullOrWhiteSpace(expected))
+				{
+					expected = s.TrimEnd(trimCharsEnd);
+				}
+				else
+				{
+					expected = string.Concat(expected, "|", s.TrimEnd(trimCharsEnd));
+				}
+			}
+			Assert.AreEqual(string.Concat(expected, Environment.NewLine), actual);
+		}
+
+		[TestMethod()]
+		public void VerifyLeadingCharsRemoved()
+		{
+			string actual = string.Empty;
+			string[] record = {",954999991", "  _teststu01", "Student01"};
+
+			CsvFormat target = new CsvFormat();
+			target.FieldSeparator = "|";
+			char[] trimStartChars = new[] {',', ' '};
+			target.FieldTrimLeadingChars = trimStartChars;
+
+			DataTable table = new DataTable();
+			table.Columns.Add("SID", typeof(string));
+			table.Columns.Add("Username", typeof(string));
+			table.Columns.Add("Last Name", typeof(string));
+
+			table.Rows.Add(record);
+
+			using (DataSet ds = new DataSet())
+			{
+				ds.Tables.Add(table);
+
+				actual = target.Serialize(ds);
+			}
+
+			string expected = string.Empty;
+			foreach (string s in record)
+			{
+				if (string.IsNullOrWhiteSpace(expected))
+				{
+					expected = s.TrimStart(trimStartChars);
+				}
+				else
+				{
+					expected = string.Concat(expected, "|", s.TrimStart(trimStartChars));
+				}
 			}
 			Assert.AreEqual(string.Concat(expected, Environment.NewLine), actual);
 		}

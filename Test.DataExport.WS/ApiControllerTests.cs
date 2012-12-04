@@ -1,4 +1,6 @@
-﻿using DataExport.WS.Controllers;
+﻿using System.IO;
+using CtcApi;
+using DataExport.WS.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
@@ -6,12 +8,11 @@ using System.Web.Mvc;
 
 namespace Test.DataExport.WS
 {
-
-
 	[TestClass()]
 	public class ApiControllerTests
 	{
 
+		#region Additional test attributes
 
 		private TestContext testContextInstance;
 
@@ -27,7 +28,6 @@ namespace Test.DataExport.WS
 			}
 		}
 
-		#region Additional test attributes
 		// 
 		//You can use the following additional attributes as you write your tests:
 		//
@@ -57,10 +57,11 @@ namespace Test.DataExport.WS
 		//
 		#endregion
 
+		#region Tests
 		[TestMethod()]
 		public void TestIndex()
 		{
-			ApiController target = new ApiController();
+			ApiController target = InitializeController();
 			ViewResult actual = target.Index() as ViewResult;
 			Assert.IsNotNull(actual);
 		}
@@ -68,7 +69,7 @@ namespace Test.DataExport.WS
 		[TestMethod]
 		public void TestExport_Maxient_Feed1_Demographics()
 		{
-			ApiController api = new ApiController();
+			ApiController api = InitializeController();
 			ViewResult view = api.Export("maxient1") as ViewResult;
 			Assert.IsNotNull(view);
 			
@@ -82,7 +83,7 @@ namespace Test.DataExport.WS
 		[TestMethod]
 		public void TestExport_Maxient_Feed2_Schedule()
 		{
-			ApiController api = new ApiController();
+			ApiController api = InitializeController();
 			ViewResult view = api.Export("maxient2") as ViewResult;
 			Assert.IsNotNull(view);
 			
@@ -93,5 +94,18 @@ namespace Test.DataExport.WS
 			Assert.IsTrue(result, "Export call reports a failure.");
 		}
 
+		#endregion
+
+		#region Helper methods
+		private ApiController InitializeController()
+		{
+			ApplicationContext context = new ApplicationContext
+			                             	{
+			                             			BaseDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\DataExport.WS")
+			                             	};
+			return new ApiController(context);
+		}
+
+		#endregion
 	}
 }

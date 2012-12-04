@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using CtcApi;
 
 namespace DataExport.WS.Controllers
 {
@@ -11,6 +12,8 @@ namespace DataExport.WS.Controllers
 
 		public IDataInput Data {get;set;}
 
+		public ApplicationContext Context {get;set;}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -18,6 +21,8 @@ namespace DataExport.WS.Controllers
 		public string Export()
 		{
 			DataSet ds = Data.Import();
+
+			Format.Context = Context;
 			return Format.Serialize(ds);
 		}
 	}

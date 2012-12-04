@@ -7,12 +7,15 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Xsl;
 using Common.Logging;
+using CtcApi;
 
 namespace DataExport.WS
 {
 	public class XslFormat : XslFormatConfig, IExportFormat
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
+
+		public ApplicationContext Context {get;set;}
 
 		/// <summary>
 		/// 
@@ -84,7 +87,7 @@ namespace DataExport.WS
 		/// <returns></returns>
 		private XslCompiledTransform LoadXslTempate()
 		{
-			string xsltFilename = Path.IsPathRooted(TemplateFile) ? TemplateFile : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, TEMPLATE_FOLDER, TemplateFile);
+			string xsltFilename = Path.IsPathRooted(TemplateFile) ? TemplateFile : Path.Combine(Context.BaseDirectory, TEMPLATE_FOLDER, TemplateFile);
 
 			using (FileStream fs = new FileStream(xsltFilename, FileMode.Open, FileAccess.Read))
 			{

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
 using Common.Logging;
+using CtcApi;
 using CtcApi.Extensions;
 using CtcApi.Web.Mvc;
 using DataExport.Web.Properties;
@@ -16,16 +17,23 @@ namespace DataExport.WS.Controllers
 	/// </summary>
   public class ApiController : BaseController
 	{
+		private ApplicationContext _appContext;
 		private ILog _log = LogManager.GetCurrentClassLogger();
 		// (ExporterConfig)ConfigurationManager.GetSection(ExporterConfig.GetSectionName())
 		// TODO: replace the following initializations with loading from config settings (above)
+		private static char[] trimChars = {',', ' '};
 		private IList<IExporter> _exporters = new List<IExporter>
 		                                      	{
 		                                      			new Exporter
 		                                      				{
 		                                      						Name = "maxient1",
 		                                      						Data = new SqlDataInput {CmdText = "SELECT * FROM vw_Maxient_Feed1"},
-																											Format = new CsvFormat {Separator = "|"}
+																											Format = new CsvFormat
+																											         	{
+																											         			FieldSeparator = "|",
+																																		FieldTrimEndChars = trimChars,
+																																		FieldTrimLeadingChars = trimChars
+																											         	}
 		                                      				},
 																								new Exporter
 																									{
@@ -38,6 +46,7 @@ namespace DataExport.WS.Controllers
 																									}
   	                                      	};
 
+
 		#region Initialization
 		/// <summary>
 		/// 
@@ -49,6 +58,20 @@ namespace DataExport.WS.Controllers
 		/// </remarks>
 		public ApiController() : base(Assembly.GetExecutingAssembly())
 		{
+			_appContext = new ApplicationContext {BaseDirectory = AppDomain.CurrentDomain.BaseDirectory};
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// This constructor initializes the <see cref="BaseController"/>, which provides common
+		/// functionality like populating <i>ViewBag.Version</i> with the <see cref="Version"/>
+		/// of the current MVC application.
+		/// </remarks>
+		public ApiController(ApplicationContext context) : base(Assembly.GetExecutingAssembly())
+		{
+			_appContext = context;
 		}
 		#endregion
 
@@ -80,6 +103,7 @@ namespace DataExport.WS.Controllers
 				}
 
 				IExporter exporter = exporters.Take(1).Single();
+				exporter.Context = _appContext;
 
 				string csv = exporter.Export();
 				_log.Trace(m => m("Export result:\n{0}", csv));

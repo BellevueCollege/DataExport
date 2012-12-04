@@ -115,6 +115,7 @@
     <Compile Include="ActiveDirectoryRoleProvider.cs" />
     <Compile Include="AuthorizeFromConfigAttribute.cs" />
     <Compile Include="Controllers\ApiController.cs" />
+    <Compile Include="CtcApi\ApplicationContext.cs" />
     <Compile Include="XslFormat.cs" />
     <Compile Include="CsvFormat.cs" />
     <Compile Include="CsvFormatConfig.cs" />

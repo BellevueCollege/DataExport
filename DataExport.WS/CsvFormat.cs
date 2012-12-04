@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Data;
 using System.Text;
+using CtcApi;
 
 namespace DataExport.WS
 {
 	public class CsvFormat : CsvFormatConfig, IExportFormat
 	{
+		public ApplicationContext Context {get;set;}
+
 		public string Serialize(DataSet ds)
 		{
 			StringBuilder csv = new StringBuilder();
@@ -19,9 +22,9 @@ namespace DataExport.WS
 				{
 					if (i != 0)	// don't leave a trailing separator
 					{
-						csv.Append(Separator);
+						csv.Append(FieldSeparator);
 					}
-					csv.Append(row[i].ToString());
+					csv.Append(row[i].ToString().TrimEnd(FieldTrimEndChars).TrimStart(FieldTrimLeadingChars));
 				}
 				csv.Append(Environment.NewLine);
 			}
