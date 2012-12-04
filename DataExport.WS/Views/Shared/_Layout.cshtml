@@ -1,12 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+		<title>@ViewBag.Title</title>
+		<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+		<script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
 </head>
 
 <body>
-    @RenderBody()
+		@RenderBody()
+		<hr />
+		<address style="text-align: right;">Version @ViewBag.Version</address>
 </body>
 </html>
