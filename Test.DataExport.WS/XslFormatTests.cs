@@ -76,7 +76,7 @@ namespace Test.DataExport.WS
 			table.Columns.Add("CourseID", typeof(string));
 			table.Columns.Add("Section", typeof(string));
 			table.Columns.Add("Room", typeof(string));
-			table.Columns.Add("Instructor", typeof(string));
+			table.Columns.Add("InstructorName", typeof(string));
 
 			table.Rows.Add("954999991", "ART	101", "A", "R104", "Instructor, Anne B.");
 			table.Rows.Add("954999991", "ENGL&101", "OAS", "B230", "Teacher, Carol D");
