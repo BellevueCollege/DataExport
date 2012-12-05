@@ -32,6 +32,10 @@ AS
 		,ISNULL(s.City, '') AS "Permanent city"
 		,ISNULL(s.[State], '') AS "Permanent state"
 		,ISNULL(s.Zip, '') AS "Permanent zip"
+		,CASE ISNULL(s.NTUserName, '')
+			WHEN '' THEN ''
+			ELSE s.NTUserName +'@bellevuecollege.edu'
+		 END AS "Email address"
 		--,s.Address1
 		--,s.City1
 		--,s.State1
