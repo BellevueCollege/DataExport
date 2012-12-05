@@ -2,6 +2,7 @@
 using System.Data;
 using System.Text;
 using CtcApi;
+using CtcApi.Extensions;
 
 namespace DataExport.WS
 {
@@ -20,11 +21,23 @@ namespace DataExport.WS
 			{
 				for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
 				{
-					if (i != 0)	// don't leave a trailing separator
+					if (i != 0)	// don't leave a leading or trailing separator
 					{
 						csv.Append(FieldSeparator);
 					}
-					csv.Append(row[i].ToString().TrimEnd(FieldTrimEndChars).TrimStart(FieldTrimLeadingChars));
+					
+					string fieldData = row[i].ToString();
+
+					if (FieldTrimLeadingChars != null && FieldTrimLeadingChars.Length > 0)
+					{
+						fieldData = fieldData.TrimStart(FieldTrimLeadingChars);
+					}
+					if (FieldTrimEndChars != null && FieldTrimEndChars.Length > 0)
+					{
+						fieldData = fieldData.TrimEnd(FieldTrimEndChars);
+					}
+					// TODO: should only TitleCase fields that are so specified in the config settings
+					csv.Append(fieldData);
 				}
 				csv.Append(Environment.NewLine);
 			}
