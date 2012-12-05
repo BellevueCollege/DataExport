@@ -2,11 +2,16 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-/* Schedule Data */
+/*******************************************************************
+ * Maxient Data Feed 1 - Schedule Data
+ *******************************************************************/
 CREATE VIEW [dbo].[vw_Maxient_Feed2]
 AS
-SELECT
+SELECT DISTINCT
 	e.[SID]
+/* DEBUGING CODE - comment this line to enable
+,e.ClassID
+-- END DEBUGGING CODE */
 	,c.CourseID
 	,c.Section
 	,ISNULL(i.Room, '') AS Room
@@ -25,5 +30,8 @@ WHERE e.YearQuarterID IN (
 		WHERE y.YearQuarterID <> 'Z999' AND y.LastClassDay < GETDATE()
 		ORDER BY y.YearQuarterID DESC
 )
---ORDER BY e.[SID]
+/* DEBUGING CODE - comment this line to enable
+AND e.[sid] = '950406965'
+ORDER BY e.[SID], c.CourseID
+-- END DEBUGGING CODE */
 GO

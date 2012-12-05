@@ -38,7 +38,7 @@ namespace DataExport.WS.Controllers
 																								new Exporter
 																									{
 																											Name = "maxient2",
-																											Data = new SqlDataInput {CmdText = "SELECT * FROM vw_Maxient_Feed2 ORDER BY [SID]"},
+																											Data = new SqlDataInput {CmdText = "SELECT * FROM vw_Maxient_Feed2 ORDER BY [SID], CourseID"},
 																											Format = new XslFormat
 																											         	{
 																											         			TemplateFile = "Maxient2.StudentSchedule.xslt"
