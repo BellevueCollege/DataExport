@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{596CF2E3-0E3C-47CC-A161-0A910B38ED71}") = "DataExport.DB", "DataExport.DB\DataExport.DB.rgproj", "{79B88284-2BFA-4830-9B47-BB3C830438F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResearchConfig", "ResearchConfig\ResearchConfig.csproj", "{F1C90B27-7F9F-46A2-947F-D78A006B2373}"
-EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = DataExport.vsmdi
@@ -78,21 +76,6 @@ Global
 		{79B88284-2BFA-4830-9B47-BB3C830438F2}.Release|Mixed Platforms.Build.0 = Release|x86
 		{79B88284-2BFA-4830-9B47-BB3C830438F2}.Release|x86.ActiveCfg = Release|x86
 		{79B88284-2BFA-4830-9B47-BB3C830438F2}.Release|x86.Build.0 = Release|x86
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.QA|Any CPU.ActiveCfg = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.QA|Any CPU.Build.0 = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.QA|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.QA|Mixed Platforms.Build.0 = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.QA|x86.ActiveCfg = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{F1C90B27-7F9F-46A2-947F-D78A006B2373}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

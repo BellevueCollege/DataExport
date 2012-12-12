@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Xsl;
 using Microsoft.Win32.SafeHandles;
 
-namespace DataExport.WS
+namespace DataExport.WS.Config
 {
 	public class XslFormatConfig
 	{

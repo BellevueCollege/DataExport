@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using DataExport.WS.Config;
 using DataExport.WS.Controllers;
 
 namespace DataExport.WS

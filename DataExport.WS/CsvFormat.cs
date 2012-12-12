@@ -2,7 +2,7 @@
 using System.Data;
 using System.Text;
 using CtcApi;
-using CtcApi.Extensions;
+using DataExport.WS.Config;
 
 namespace DataExport.WS
 {

@@ -1,4 +1,4 @@
-﻿namespace DataExport.WS
+﻿namespace DataExport.WS.Config
 {
 	public class SqlInputConfig
 	{

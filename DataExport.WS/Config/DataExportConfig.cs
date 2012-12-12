@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using DataExport.WS.Controllers;
 
-namespace DataExport.Web
+namespace DataExport.WS.Config
 {
 	public class DataExportConfig
 	{

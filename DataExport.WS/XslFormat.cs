@@ -8,6 +8,7 @@ using System.Xml.Schema;
 using System.Xml.Xsl;
 using Common.Logging;
 using CtcApi;
+using DataExport.WS.Config;
 
 namespace DataExport.WS
 {
