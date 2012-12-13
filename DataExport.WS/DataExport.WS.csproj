@@ -120,6 +120,9 @@
     <Compile Include="Config\DataExportConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="CtcApi\ApplicationContext.cs" />
+    <Compile Include="Deliver\DeliveryBase.cs" />
+    <Compile Include="Deliver\FilePathDelivery.cs" />
+    <Compile Include="Deliver\IDeliveryStrategy.cs" />
     <Compile Include="XslFormat.cs" />
     <Compile Include="CsvFormat.cs" />
     <Compile Include="Config\CsvFormatConfig.cs" />
