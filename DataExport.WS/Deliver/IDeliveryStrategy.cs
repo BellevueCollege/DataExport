@@ -6,6 +6,9 @@ namespace DataExport
 {
 	public interface IDeliveryStrategy
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		byte[] Source{get;set;}
 
 		/// <summary>
