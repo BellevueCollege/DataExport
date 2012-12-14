@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO;
 using Common.Logging;
+using Renci.SshNet;
+using Renci.SshNet.Common;
 using Tamir.SharpSsh;
 using Tamir.SharpSsh.java.io;
 using Tamir.SharpSsh.jsch;
 using Tamir.Streams;
+using Session = Renci.SshNet.Session;
 using String = Tamir.SharpSsh.java.String;
 
 namespace DataExport
@@ -50,6 +53,48 @@ namespace DataExport
 		/// <returns></returns>
 		public bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Exception)
 		{
+			Stream dataStream = new MemoryStream(Source);
+
+			using (SftpClient sftp = CreateClient())
+			{
+				try
+				{
+					sftp.Connect();
+
+					if (DeliveryWriteMode.Overwrite != writeMode && sftp.Exists(Destination))
+					{
+						if (DeliveryWriteMode.Exception == writeMode)
+						{
+							throw new SftpPermissionDeniedException(string.Format("Destination file exists and Overwrite flag has not been specified: '{0}'", Destination));
+						}
+						// DeliverWriteMode.Ignore
+						_log.Info(m => m("Destination file exists and flag is set to Ignore. Skipping.\n{0}", Destination));
+					}
+
+					sftp.UploadFile(dataStream, Destination, (DeliveryWriteMode.Overwrite == writeMode));
+					// if nothing blew up we succeeded (?)
+					return true;
+				}
+				catch (SshConnectionException ex)
+				{
+					_log.Warn(m => m("Unable to establish an SFTP connection to '{0}@{1}'\n{2}", Username, Hostname, ex));
+				}
+				catch(SftpPermissionDeniedException ex)
+				{
+					_log.Warn(m => m("Failed to upload file to '{0}@{1}:{2}'\n{3}", Username, Hostname, Destination, ex));
+				}
+				catch(SshException ex)
+				{
+					_log.Warn(m => m("SSH server returned the following error '{0}'\n{1}", ex.Message, ex));
+				}
+				finally
+				{
+					if (sftp != null && sftp.IsConnected)
+					{
+						sftp.Disconnect();
+					}
+				}
+			}
 
 #region SharpSSH/JSch
 /*
@@ -139,6 +184,29 @@ File name: 'DiffieHellman, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
  */
 #endregion
 			return false;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private SftpClient CreateClient()
+		{
+
+			if (string.IsNullOrWhiteSpace(KeyFile))
+			{
+				if (string.IsNullOrWhiteSpace(Password))
+				{
+					throw new SshAuthenticationException("Password cannot be blank if no KeyFile is provided.");
+				}
+				return new SftpClient(Hostname, Username, Password);
+			}
+			
+			// if we haven't already returned...
+			// Include Password if it was provided
+			PrivateKeyFile[] keys = new[] {string.IsNullOrWhiteSpace(Password) ? new PrivateKeyFile(KeyFile) : new PrivateKeyFile(KeyFile, Password)};
+			
+			return new SftpClient(Hostname, Username, keys);
 		}
 	}
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>SSH.NET</id>
+    <version>2012.12.3</version>
+    <title>SSH.NET BETA</title>
+    <authors>Renci</authors>
+    <owners>Renci</owners>
+    <licenseUrl>http://sshnet.codeplex.com/license</licenseUrl>
+    <projectUrl>http://sshnet.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>IMPORTANT: This project is BETA quality.  This project was inspired by Sharp.SSH library which was ported from Java.  This library is a complete rewrite using .NET, without any third party dependencies and to utilize the parallelism as much as possible to allow best performance you can get.  SSH.NET supports .NET 3.5, 4.0, Silverlight, and Windows Phone 7.</description>
+    <releaseNotes>Add SOCKS4, SOCKS5 and HTTP Proxy support when connecting to remote server. For silverlight only IP address can be used for server address when using proxy.
+Add dynamic port forwarding support using ForwardedPortDynamic class.
+    Add new ShellStream class to work with SSH Shell.
+Add supports for multiple authentication methods
+Fix WindowAdjusment for SCP and SFTP
+Fix Key regeneration
+Fix SocketReadLine which can cause connection problems to some server.
+Fix support for private keys, such Amazon Web Services.</releaseNotes>
+    <copyright>2010, RENCI</copyright>
+    <language>en-US</language>
+    <tags>ssh beta .net40 sftp .net35 wp7 wp71 silverlight windowsphone</tags>
+  </metadata>
+</package>

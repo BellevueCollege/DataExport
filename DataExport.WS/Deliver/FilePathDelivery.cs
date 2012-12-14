@@ -43,7 +43,7 @@ namespace DataExport
 				}
 				else if (DeliveryWriteMode.Exception == writeMode)
 				{
-					throw new NotSupportedException(string.Format("File already exists, and Overwrite flag has not been specified: '{0}", Destination));
+					throw new NotSupportedException(string.Format("File already exists, and Overwrite flag has not been specified: '{0}'", Destination));
 				}
 				else if (DeliveryWriteMode.Ignore == writeMode)
 				{
