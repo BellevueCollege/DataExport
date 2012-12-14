@@ -95,6 +95,7 @@ namespace Test.DataExport.WS
 			string keyfile = ConfigurationManager.AppSettings["MaxientSftpKeyFile"];
 			byte[] data = DeliveryStrategy.ConvertToSource("blah");
 
+			string keyfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "testkey.rsa");
 			SftpDelivery sftp = new SftpDelivery()
 			                    	{
 																Source = data,
