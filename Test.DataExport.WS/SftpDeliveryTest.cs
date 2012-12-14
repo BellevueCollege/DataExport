@@ -1,7 +1,7 @@
-﻿using System.Configuration;
-using System.IO;
+using System.Configuration;
 using System.Text.RegularExpressions;
 using CtcApi;
+using System.IO;
 using DataExport;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

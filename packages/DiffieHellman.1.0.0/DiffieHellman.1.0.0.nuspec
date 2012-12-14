@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DiffieHellman</id>
+    <version>1.0.0</version>
+    <title />
+    <authors>Mikhail</authors>
+    <owners>Mikhail</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>My package description.</description>
+  </metadata>
+</package>
