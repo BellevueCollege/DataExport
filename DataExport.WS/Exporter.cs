@@ -14,6 +14,8 @@ namespace DataExport.WS.Controllers
 
 		public ApplicationContext Context {get;set;}
 
+		public IDeliveryStrategy Deliver {get;set;}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -23,7 +25,14 @@ namespace DataExport.WS.Controllers
 			DataSet ds = Data.Import();
 
 			Format.Context = Context;
-			return Format.Serialize(ds);
+			string text = Format.Serialize(ds);
+
+			// Transmit the result to the specified destination 
+			Deliver.Source = DeliveryBase.ConvertToSource(text);
+			Deliver.Put();
+
+			// return the text to the caller for troubleshooting, etc.
+			return text;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -33,8 +34,15 @@ namespace DataExport.WS.Controllers
 																											         			FieldSeparator = "|",
 																																		FieldTrimEndChars = trimChars,
 																																		FieldTrimLeadingChars = trimChars
-																											         	}
-		                                      				},
+																											         	},
+																											Deliver = new SftpDelivery
+																											          	{
+																																		Hostname = "",
+																																		Destination = "",
+																																		Username = "",
+																																		KeyFile = "",
+																																	}
+																									},
 																								new Exporter
 																									{
 																											Name = "maxient2",
@@ -42,7 +50,14 @@ namespace DataExport.WS.Controllers
 																											Format = new XslFormat
 																											         	{
 																											         			TemplateFile = "Maxient2.StudentSchedule.xslt"
-																											         	}
+																											         	},
+																											Deliver = new SftpDelivery
+																											          	{
+																																		Hostname = "",
+																																		Destination = "",
+																																		Username = "",
+																																		KeyFile = "",
+																																	}
 																									}
   	                                      	};
 
@@ -114,12 +129,7 @@ namespace DataExport.WS.Controllers
 				}
 				else
 				{
-					// TODO: implement uploading via SSH
-
-			
 					// TODO: add config settings for saving file
-
-
 					/***********************************************************************************************
 					 * WARNING: Only return file when testing. The downloaded contents could contain sensitive data.
 					 ***********************************************************************************************/

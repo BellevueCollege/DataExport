@@ -8,6 +8,7 @@ namespace DataExport.WS.Controllers
 		string Name { get; set; }
 		IDataInput Data { get;set; }
 		ApplicationContext Context{get;set;}
+		IDeliveryStrategy Deliver{get;set;}
 		string Export();
 	}
 }
