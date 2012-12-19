@@ -41,6 +41,7 @@ namespace DataExport.WS.Controllers
 																																		Destination = "",
 																																		Username = "",
 																																		KeyFile = "",
+																																		SaveFileCopy = true,
 																																	}
 																									},
 																								new Exporter
@@ -57,6 +58,7 @@ namespace DataExport.WS.Controllers
 																																		Destination = "",
 																																		Username = "",
 																																		KeyFile = "",
+																																		SaveFileCopy = true,
 																																	}
 																									}
   	                                      	};

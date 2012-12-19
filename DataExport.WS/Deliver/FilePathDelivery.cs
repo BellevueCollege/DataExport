@@ -1,12 +1,18 @@
 ﻿using System;
 using System.IO;
 using Common.Logging;
+using CtcApi;
 
 namespace DataExport
 {
 	public class FilePathDelivery : DeliveryBase, IDeliveryStrategy
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ApplicationContext Context{get;set;}
 
 		/// <summary>
 		/// 

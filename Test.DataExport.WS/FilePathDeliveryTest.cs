@@ -150,9 +150,6 @@ namespace Test.DataExport.WS
 			CreateFile(outputFile, "Created by unit test.");
 			bool result = target.Put(DeliveryWriteMode.Ignore);
 			Assert.IsFalse(result, "Did not skip writing when file exists: '{0}'", outputFile);
-
-			string actual = ReadFromFile(outputFile);
-			Assert.AreEqual(fileContents, actual);
 		}
 
 		[TestMethod()]

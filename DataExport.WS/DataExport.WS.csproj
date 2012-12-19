@@ -132,6 +132,8 @@
     <Compile Include="Deliver\DeliveryBase.cs" />
     <Compile Include="Deliver\FilePathDelivery.cs" />
     <Compile Include="Deliver\IDeliveryStrategy.cs" />
+    <Compile Include="Deliver\ISftpClient.cs" />
+    <Compile Include="Deliver\SftpClientProxy.cs" />
     <Compile Include="Deliver\SftpDelivery.cs" />
     <Compile Include="XslFormat.cs" />
     <Compile Include="CsvFormat.cs" />

@@ -25,6 +25,21 @@ namespace DataExport
 
 	public class DeliveryBase
 	{
+		private bool _saveFileCopy;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool SaveFileCopy
+		{
+			get {
+				return _saveFileCopy;
+			}
+			set {
+				_saveFileCopy = value;
+			}
+		}
+
 		public static byte[] ConvertToSource(string data)
 		{
 			return Encoding.UTF8.GetBytes(data);

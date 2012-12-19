@@ -67,6 +67,7 @@ namespace Test.DataExport.WS
     }
 
     #region Tests against real SFTP servers
+
 		[TestMethod()]
 		[Ignore()]	// performs real upload to actual SSH server
 		public void TestUploadToLANServer()

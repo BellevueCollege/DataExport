@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using Common.Logging;
+using CtcApi;
 using Renci.SshNet;
 using Renci.SshNet.Common;
+using CtcApi.Extensions;
 using Tamir.SharpSsh;
 using Tamir.SharpSsh.java.io;
 using Tamir.SharpSsh.jsch;
@@ -15,6 +17,12 @@ namespace DataExport
 	public class SftpDelivery : DeliveryBase, IDeliveryStrategy
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
+		private ISftpClient _sftp;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ApplicationContext Context{get;set;}
 
 		/// <summary>
 		/// 
@@ -46,6 +54,15 @@ namespace DataExport
 		/// </summary>
 		public string KeyFile{get;set;}
 
+		public SftpDelivery()
+		{
+		}
+
+		public SftpDelivery(ISftpClient client)
+		{
+			_sftp = client;
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -53,49 +70,62 @@ namespace DataExport
 		/// <returns></returns>
 		public bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Exception)
 		{
-			Stream dataStream = new MemoryStream(Source);
-
-			using (SftpClient sftp = CreateClient())
+			if (SaveFileCopy)
 			{
-				try
-				{
-					sftp.Connect();
+				string filename = Path.Combine(Context.BaseDirectory, string.Format("SftpDeliveryFile-{0:yyyyMMdd-HHmmss}.csv", DateTime.Now));
+				Source.ToFile(filename, Source.Length);
+			}
 
-					if (DeliveryWriteMode.Overwrite != writeMode && sftp.Exists(Destination))
+			using (Stream dataStream = new MemoryStream(Source))
+			{
+				_sftp = GetClient();
+
+				using (_sftp)
+				{
+					try
 					{
-						if (DeliveryWriteMode.Exception == writeMode)
+						_sftp.Connect();
+
+						if (DeliveryWriteMode.Overwrite != writeMode && _sftp.Exists(Destination))
 						{
-							throw new SftpPermissionDeniedException(string.Format("Destination file exists and Overwrite flag has not been specified: '{0}'", Destination));
+							if (DeliveryWriteMode.Exception == writeMode)
+							{
+								_log.Info(m => m("Destination file exists and Overwrite flag has not been specified: '{0}'", Destination));
+								throw new SftpPermissionDeniedException("File already exists and Overwrite is not enabled.");
+							}
+							// DeliverWriteMode.Ignore
+							_log.Info(m => m("Destination file exists and flag is set to Ignore. Skipping.\n{0}", Destination));
+							return false;
 						}
-						// DeliverWriteMode.Ignore
-						_log.Info(m => m("Destination file exists and flag is set to Ignore. Skipping.\n{0}", Destination));
-					}
 
-					sftp.UploadFile(dataStream, Destination, (DeliveryWriteMode.Overwrite == writeMode));
-					// if nothing blew up we succeeded (?)
-					return true;
-				}
-				catch (SshConnectionException ex)
-				{
-					_log.Warn(m => m("Unable to establish an SFTP connection to '{0}@{1}'\n{2}", Username, Hostname, ex));
-				}
-				catch(SftpPermissionDeniedException ex)
-				{
-					_log.Warn(m => m("Failed to upload file to '{0}@{1}:{2}'\n{3}", Username, Hostname, Destination, ex));
-				}
-				catch(SshException ex)
-				{
-					_log.Warn(m => m("SSH server returned the following error '{0}'\n{1}", ex.Message, ex));
-				}
-				finally
-				{
-					if (sftp != null && sftp.IsConnected)
+						_sftp.UploadFile(dataStream, Destination, (DeliveryWriteMode.Overwrite == writeMode));
+						// if nothing blew up we succeeded (?)
+						return true;
+					}
+					catch (SshConnectionException ex)
 					{
-						sftp.Disconnect();
+						_log.Warn(m => m("Unable to establish an SFTP connection to '{0}@{1}'\n{2}", Username, Hostname, ex));
+						throw;
+					}
+					catch(SftpPermissionDeniedException ex)
+					{
+						_log.Warn(m => m("Failed to upload file to '{0}@{1}:{2}'\n{3}", Username, Hostname, Destination, ex));
+						throw;
+					}
+					catch(SshException ex)
+					{
+						_log.Warn(m => m("SSH server returned the following error '{0}'\n{1}", ex.Message, ex));
+						throw;
+					}
+					finally
+					{
+						if (_sftp != null && _sftp.IsConnected)
+						{
+							_sftp.Disconnect();
+						}
 					}
 				}
 			}
-
 #region SharpSSH/JSch
 /*
 			Sftp sftp = new Sftp(Hostname, Username);
@@ -189,9 +219,12 @@ File name: 'DiffieHellman, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <returns></returns>
-		private SftpClient CreateClient()
+		private ISftpClient GetClient()
 		{
+			if (_sftp != null)
+			{
+				return _sftp;
+			}
 
 			if (string.IsNullOrWhiteSpace(KeyFile))
 			{
@@ -199,14 +232,19 @@ File name: 'DiffieHellman, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 				{
 					throw new SshAuthenticationException("Password cannot be blank if no KeyFile is provided.");
 				}
-				return new SftpClient(Hostname, Username, Password);
+				return new SftpClientProxy(Hostname, Username, Password);
 			}
-			
+
 			// if we haven't already returned...
 			// Include Password if it was provided
-			PrivateKeyFile[] keys = new[] {string.IsNullOrWhiteSpace(Password) ? new PrivateKeyFile(KeyFile) : new PrivateKeyFile(KeyFile, Password)};
-			
-			return new SftpClient(Hostname, Username, keys);
+			PrivateKeyFile[] keys = new[]
+			                        	{
+			                        			string.IsNullOrWhiteSpace(Password)
+			                        					? new PrivateKeyFile(KeyFile)
+			                        					: new PrivateKeyFile(KeyFile, Password)
+			                        	};
+
+			return new SftpClientProxy(Hostname, Username, keys);
 		}
 	}
 }

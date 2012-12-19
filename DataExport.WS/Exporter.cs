@@ -28,6 +28,7 @@ namespace DataExport.WS.Controllers
 			string text = Format.Serialize(ds);
 
 			// Transmit the result to the specified destination 
+			Deliver.Context = Context;
 			Deliver.Source = DeliveryBase.ConvertToSource(text);
 			Deliver.Put();
 
