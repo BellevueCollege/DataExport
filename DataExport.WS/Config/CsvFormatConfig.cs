@@ -16,5 +16,10 @@
 		/// Array of char values to trim from the beginning of each field
 		/// </summary>
 		public char[] FieldTrimLeadingChars{get;set;}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool IncludeHeader{get;set;}
 	}
 }

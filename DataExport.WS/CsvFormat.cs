@@ -14,7 +14,16 @@ namespace DataExport.WS
 		{
 			StringBuilder csv = new StringBuilder();
 
-			// TODO: are column headings required?
+			if (IncludeHeader)
+			{
+				StringBuilder header = new StringBuilder();
+				foreach (DataColumn column in ds.Tables[0].Columns)
+				{
+					header.AppendFormat("{0}{1}", header.Length > 0 ? FieldSeparator : string.Empty, column.ColumnName);
+				}
+				// start with the column headers
+				csv.Append(header.ToString()).Append(Environment.NewLine);
+			}
 
 			// Add rows
 			foreach (DataRow row in ds.Tables[0].Rows)
@@ -36,7 +45,6 @@ namespace DataExport.WS
 					{
 						fieldData = fieldData.TrimEnd(FieldTrimEndChars);
 					}
-					// TODO: should only TitleCase fields that are so specified in the config settings
 					csv.Append(fieldData);
 				}
 				csv.Append(Environment.NewLine);
