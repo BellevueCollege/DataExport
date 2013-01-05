@@ -67,6 +67,7 @@ namespace Test.DataExport.WS
 		}
 
 		[TestMethod]
+		[Ignore]	// This test connects to a live, production SSH server
 		public void TestExport_Maxient_Feed1_Demographics()
 		{
 			ApiController api = InitializeController();
@@ -81,6 +82,7 @@ namespace Test.DataExport.WS
 		}
 
 		[TestMethod]
+		[Ignore]	// This test connects to a live, production SSH server
 		public void TestExport_Maxient_Feed2_Schedule()
 		{
 			ApiController api = InitializeController();
