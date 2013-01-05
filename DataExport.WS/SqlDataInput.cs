@@ -12,35 +12,24 @@ namespace DataExport.WS
 		/// <summary>
 		/// 
 		/// </summary>
-		public SqlDataInput()
-		{
-			// TODO: replace these initialization values with .config properties
-			Connection = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
 		/// <returns></returns>
 		public DataSet Import()
 		{
 			DataSet ds = new DataSet();
 
-			// TODO: make factory type configurable
-			// - either pull from connection strings, or specify explicitly. Fall back on System.Data.SqlClient.
-			DbProviderFactory factory = DbProviderFactories.GetFactory("System.Data.SqlClient");
+			DbProviderFactory factory = DbProviderFactories.GetFactory(ProviderType);
 			
 			using (DbConnection conn = factory.CreateConnection())
 			{
 			  if (conn != null)
 			  {
-			    conn.ConnectionString = Connection;
+			    conn.ConnectionString = ConnectionString;
 
 			    using (DbCommand cmd = conn.CreateCommand())
 			    {
 			      cmd.CommandText = CmdText;
 						// TODO: make the database time out configurable. Perhaps per-DataInput?
-			    	cmd.CommandTimeout = 60;
+			    	cmd.CommandTimeout = Timeout;
 
 			      IDbDataAdapter adapter = factory.CreateDataAdapter();
 				

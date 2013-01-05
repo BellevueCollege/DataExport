@@ -140,7 +140,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y "$(ProjectDir)testkey.rsa" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>mkdir "$(TargetDir)/SupportFiles"
+xcopy /y "$(ProjectDir)testkey.rsa" "$(TargetDir)SupportFiles"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

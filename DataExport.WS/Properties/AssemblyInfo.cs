@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DataExport Web Service")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Exports data based on configuration settings.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Bellevue College")]
 [assembly: AssemblyProduct("DataExport.WebService")]
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.9.0.2")]
-[assembly: AssemblyFileVersion("0.9.0.2")]
+[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyFileVersion("1.0.0.1")]
