@@ -60,6 +60,7 @@ namespace DataExport
 
 		public SftpDelivery(ISftpClient client)
 		{
+			_log.Trace(m => m("Initializing SftpDelivery with an ISftpClient object."));
 			_sftp = client;
 		}
 
@@ -73,19 +74,24 @@ namespace DataExport
 			if (SaveFileCopy)
 			{
 				string filename = Path.Combine(Context.BaseDirectory, string.Format("SftpDeliveryFile-{0:yyyyMMdd-HHmmss}.csv", DateTime.Now));
+				_log.Info(m => m("Saving copy of SFTP upload file to '{0}'", filename));
 				Source.ToFile(filename, Source.Length);
 			}
 
+			_log.Trace(m => m("Beginning SFTP communication."));
 			using (Stream dataStream = new MemoryStream(Source))
 			{
+				_log.Trace(m => m("Getting SFTP client object..."));
 				_sftp = GetClient();
 
 				using (_sftp)
 				{
 					try
 					{
+						_log.Debug(m => m("Connecting to SFTP server ({0}@{1})...", Username, Hostname));
 						_sftp.Connect();
 
+						_log.Trace(m => m("Does file exist at destination (and Overwrite is disabled)?"));
 						if (DeliveryWriteMode.Overwrite != writeMode && _sftp.Exists(Destination))
 						{
 							if (DeliveryWriteMode.Exception == writeMode)
@@ -98,6 +104,7 @@ namespace DataExport
 							return false;
 						}
 
+						_log.Info(m => m("Uploading file via SFTP ({0}@{1}:{2}) WriteMode: '{3}'", Username, Hostname, Destination, writeMode.ToString("F")));
 						_sftp.UploadFile(dataStream, Destination, (DeliveryWriteMode.Overwrite == writeMode));
 						// if nothing blew up we succeeded (?)
 						return true;
@@ -119,6 +126,7 @@ namespace DataExport
 					}
 					finally
 					{
+						_log.Debug(m => m("Disconnecting from SFTP server..."));
 						if (_sftp != null && _sftp.IsConnected)
 						{
 							_sftp.Disconnect();
@@ -126,93 +134,6 @@ namespace DataExport
 					}
 				}
 			}
-#region SharpSSH/JSch
-/*
-			Sftp sftp = new Sftp(Hostname, Username);
-			sftp.AddIdentityFile(KeyFile);
-
-			// TODO: write bytes to a file so it can be passed to sftp
-*/
-
-/* The following code should upload a stream of byte[] data, but is throwing the following error:
- * 
-Tamir.SharpSsh.jsch.JSchException: Session.connect: System.IO.FileNotFoundException: Could not load file or assembly 'DiffieHellman, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. The system cannot find the file specified.
-File name: 'DiffieHellman, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'
-   at Tamir.SharpSsh.jsch.jce.DH.getE()
-   at Tamir.SharpSsh.jsch.DHG1.init(Session session, Byte[] V_S, Byte[] V_C, Byte[] I_S, Byte[] I_C)
-   at Tamir.SharpSsh.jsch.Session.receive_kexinit(Buffer buf)
-   at Tamir.SharpSsh.jsch.Session.connect(Int32 connectTimeout)
-
- * 
- * Even though I've installed the DiffieHellman library from here: https://nuget.org/packages/DiffieHellman/1.0.0
- * 
-			_log.Trace(m => m("Initializing SSH object and setting key file: '{0}'...", KeyFile));
-			JSch ssh = new JSch();
-			ssh.addIdentity(KeyFile);	// not sure if this is a file or the text of the key - 12/13/2012, shawn.south@bellevuecollege.edu
-
-			Session session = null;
-			try
-			{
-				_log.Info(m => m("Initiating SSH session: {0}@{1}", Username, Hostname));
-				session = ssh.getSession(Username, Hostname);
-				_log.Trace(m => m("Connecting to '{0}' as '{1}'...", Hostname, Username));
-				session.connect();
-				_log.Trace(m => m("Connected."));
-
-				Channel channel = null;
-				try
-				{
-					channel = session.openChannel("sftp");
-					_log.Trace(m => m("Connecting to SFTP channel..."));
-					channel.connect();
-					_log.Trace(m => m("Connected."));
-
-					ChannelSftp sftp = null;
-					try
-					{
-						sftp = channel as ChannelSftp;
-
-						if (sftp != null)
-						{
-							_log.Trace(m => m("Uploading data stream to '{0}'...", Destination));
-							using (InputStreamWrapper dataStream = new InputStreamWrapper(new MemoryStream(Source)))
-							{
-								sftp.put(dataStream, Destination);
-								_log.Trace(m => m("Upload complete."));
-
-								return true;
-							}
-						}
-						else
-						{
-							_log.Warn(m => m("Unable to create SFTP channel."));
-						}
-					}
-					finally
-					{
-						if (sftp != null && sftp.isConnected())
-						{
-							sftp.disconnect();
-						}
-					}
-				}
-				finally
-				{
-					if (channel != null && channel.isConnected())
-					{
-						channel.disconnect();
-					}
-				}
-			}
-			finally
-			{
-				if (session != null && session.isConnected())
-				{
-					session.disconnect();
-				}
-			}
- */
-#endregion
 			return false;
 		}
 
@@ -223,6 +144,7 @@ File name: 'DiffieHellman, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 		{
 			if (_sftp != null)
 			{
+				_log.Trace(m => m("Using existing SFTP client object."));
 				return _sftp;
 			}
 
