@@ -52,12 +52,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.Elmah">
       <HintPath>..\packages\Common.Logging.Elmah.1.2.1\lib\net40\Common.Logging.Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="CtcApi, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="CtcApi">
+      <HintPath>..\packages\CtcApi.0.9.13.1\lib\net40\CtcApi.dll</HintPath>
+    </Reference>
     <Reference Include="DiffieHellman">
       <HintPath>..\packages\DiffieHellman.1.0.0\lib\net40\DiffieHellman.dll</HintPath>
     </Reference>
@@ -124,11 +126,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveDirectoryRoleProvider.cs" />
-    <Compile Include="AuthorizeFromConfigAttribute.cs" />
     <Compile Include="Config\DataExportConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
-    <Compile Include="CtcApi\ApplicationContext.cs" />
     <Compile Include="Deliver\DeliveryBase.cs" />
     <Compile Include="Deliver\FilePathDelivery.cs" />
     <Compile Include="Deliver\IDeliveryStrategy.cs" />
@@ -138,8 +137,6 @@
     <Compile Include="XslFormat.cs" />
     <Compile Include="CsvFormat.cs" />
     <Compile Include="Config\CsvFormatConfig.cs" />
-    <Compile Include="CtcApi\ByteExtensions.cs" />
-    <Compile Include="CtcApi\StringExtensionsTmp1.cs" />
     <Compile Include="Config\SqlInputConfig.cs" />
     <Compile Include="SqlDataInput.cs" />
     <Compile Include="Exporter.cs" />
@@ -176,7 +173,6 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <None Include="lib\CtcApi.dll" />
     <None Include="Views\Api\ExportResult.cshtml" />
     <Content Include="Templates\Maxient2.StudentSchedule.xslt" />
     <Content Include="Web.config">
@@ -215,6 +211,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CtcApi\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

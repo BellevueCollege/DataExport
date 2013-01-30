@@ -1,10 +1,9 @@
 ﻿using System.Configuration;
 using System.Web;
 using System.Web.Mvc;
-using Ctc.Web.Security;
+using CtcApi.Web.Security;
 
-
-namespace Ctc.Web.Security
+namespace CtcApi.Web.Mvc
 {
 	/// <summary>
 	/// 

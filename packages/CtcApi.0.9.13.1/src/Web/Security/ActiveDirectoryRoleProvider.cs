@@ -20,7 +20,7 @@ using Common.Logging;
  * TODO: This provider still needs a lot of work/customizing.
  * I've tweaked it enough to get it working so far. - 1/04/2012, shawn.south@bellevuecollege.edu
  * ********************************************************************************************/
-namespace Ctc.Web.Security
+namespace CtcApi.Web.Security
 {
 	public sealed class ActiveDirectoryRoleProvider : RoleProvider
 	{
