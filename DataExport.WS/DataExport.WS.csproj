@@ -135,11 +135,9 @@
     <Compile Include="Deliver\SftpClientProxy.cs" />
     <Compile Include="Deliver\SftpDelivery.cs" />
     <Compile Include="XslFormat.cs" />
-    <Compile Include="CsvFormat.cs" />
-    <Compile Include="Config\CsvFormatConfig.cs" />
-    <Compile Include="Config\SqlInputConfig.cs" />
-    <Compile Include="SqlDataInput.cs" />
-    <Compile Include="Exporter.cs" />
+    <Compile Include="Config\CsvFormat.cs" />
+    <Compile Include="Config\SqlDataInput.cs" />
+    <Compile Include="Config\Exporter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

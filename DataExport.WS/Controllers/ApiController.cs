@@ -9,6 +9,7 @@ using Common.Logging;
 using CtcApi;
 using CtcApi.Extensions;
 using CtcApi.Web.Mvc;
+using DataExport.WS.Config;
 using DataExport.Web.Properties;
 
 namespace DataExport.WS.Controllers

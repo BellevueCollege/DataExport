@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using DataExport.WS;
+using DataExport.WS.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;

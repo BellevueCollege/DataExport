@@ -5,18 +5,43 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Schema;
+using System.Xml.Serialization;
 using System.Xml.Xsl;
 using Common.Logging;
 using CtcApi;
 using DataExport.WS.Config;
 
-namespace DataExport.WS
+namespace DataExport.WS.Config
 {
-	public class XslFormat : XslFormatConfig, IExportFormat
+	[XmlType("xsl")]
+	public class XslFormat : IExportFormat
 	{
+		protected const string TEMPLATE_FOLDER = "Templates";
 		private ILog _log = LogManager.GetCurrentClassLogger();
 
 		public ApplicationContext Context {get;set;}
+
+		#region .config properties
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlAttribute("template")]
+		public string Template { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlAttribute("file")]
+		public string TemplateFile { get; set; }
+
+		#endregion
+
+		public XslFormat()
+		{
+			// set default values
+			Template = string.Empty;
+			TemplateFile = string.Empty;
+		}
 
 		/// <summary>
 		/// 

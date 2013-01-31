@@ -1,6 +1,7 @@
 ﻿using CtcApi;
+using DataExport.WS.Controllers;
 
-namespace DataExport.WS.Controllers
+namespace DataExport.WS
 {
 	public interface IExporter
 	{

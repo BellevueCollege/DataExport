@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Data;
+using System.Xml.Serialization;
 using Common.Logging;
 using CtcApi;
+using DataExport.WS.Controllers;
 
-namespace DataExport.WS.Controllers
+namespace DataExport.WS.Config
 {
+	[XmlType("exporter")]
 	public class Exporter : IExporter
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
 
-		public IExportFormat Format {get;set;}
-
-		public string Name {get;set;}
-
-		public IDataInput Data {get;set;}
-
 		public ApplicationContext Context {get;set;}
 
+		[XmlAttribute("name")]
+		public string Name {get;set;}
+
+		[XmlElement(typeof(IExportFormat))]
+		public IExportFormat Format {get;set;}
+
+		[XmlElement(typeof(IDataInput))]
+		public IDataInput Data {get;set;}
+
+		[XmlElement(typeof(IDeliveryStrategy))]
 		public IDeliveryStrategy Deliver {get;set;}
 
 		/// <summary>
