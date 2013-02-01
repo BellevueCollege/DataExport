@@ -8,7 +8,7 @@ using DataExport.WS.Controllers;
 namespace DataExport.WS.Config
 {
 	[XmlType("exporter")]
-	public class Exporter : IExporter
+	public class Exporter
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
 
@@ -17,13 +17,15 @@ namespace DataExport.WS.Config
 		[XmlAttribute("name")]
 		public string Name {get;set;}
 
-		[XmlElement(typeof(IExportFormat))]
-		public IExportFormat Format {get;set;}
+        [XmlElement("csvFormat", typeof(CsvFormat))]
+        [XmlElement("xslFormat", typeof(XslFormat))]
+		public ExportFormatStrategy Format {get;set;}
 
-		[XmlElement(typeof(IDataInput))]
-		public IDataInput Data {get;set;}
+        [XmlElement("sqlInput", typeof(SqlDataInput))]
+		public DataInputStrategy Data {get;set;}
 
-		[XmlElement(typeof(DeliveryStrategy))]
+        [XmlElement("fileDelivery", typeof(FilePathDelivery))]
+        [XmlElement("sftpDelivery", typeof(SftpDelivery))]
 		public DeliveryStrategy Deliver {get;set;}
 
 		/// <summary>

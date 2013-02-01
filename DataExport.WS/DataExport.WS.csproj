@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\DataExportConfig.cs" />
+    <Compile Include="Config\DataExportConfigHandler.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Deliver\FilePathDelivery.cs" />
     <Compile Include="Deliver\DeliveryStrategy.cs" />
@@ -131,16 +132,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IDataInput.cs" />
-    <Compile Include="IExporter.cs" />
-    <Compile Include="IExportFormat.cs" />
+    <Compile Include="DataInputStrategy.cs" />
+    <Compile Include="ExportFormatStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Config\XslFormatConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Readme\Elmah.txt" />
@@ -161,6 +160,7 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <None Include="SupportFiles\testkey.rsa" />
     <None Include="Views\Api\ExportResult.cshtml" />
     <Content Include="Templates\Maxient2.StudentSchedule.xslt" />
     <Content Include="Web.config">
@@ -243,4 +243,8 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

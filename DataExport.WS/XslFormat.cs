@@ -14,12 +14,12 @@ using DataExport.WS.Config;
 namespace DataExport.WS.Config
 {
 	[XmlType("xsl")]
-	public class XslFormat : IExportFormat
+	public class XslFormat : ExportFormatStrategy
 	{
 		protected const string TEMPLATE_FOLDER = "Templates";
 		private ILog _log = LogManager.GetCurrentClassLogger();
 
-		public ApplicationContext Context {get;set;}
+		public override ApplicationContext Context {get;set;}
 
 		#region .config properties
 		/// <summary>
@@ -48,7 +48,7 @@ namespace DataExport.WS.Config
 		/// </summary>
 		/// <param name="ds"></param>
 		/// <returns></returns>
-		public string Serialize(DataSet ds)
+		public override string Serialize(DataSet ds)
 		{
 			XmlDocument xml = new XmlDocument();
 

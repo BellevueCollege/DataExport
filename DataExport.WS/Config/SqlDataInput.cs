@@ -12,7 +12,7 @@ using DataExport.WS.Controllers;
 namespace DataExport.WS.Config
 {
 	[XmlType("sql")]
-	public class SqlDataInput : IDataInput
+	public class SqlDataInput : DataInputStrategy
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
 		private string _connection;
@@ -109,34 +109,41 @@ namespace DataExport.WS.Config
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		public DataSet Import()
+		public override DataSet Import()
 		{
 			DataSet ds = new DataSet();
 
 			DbProviderFactory factory = DbProviderFactories.GetFactory(ProviderType);
-			
-			using (DbConnection conn = factory.CreateConnection())
-			{
-			  if (conn != null)
-			  {
-			    conn.ConnectionString = ConnectionString;
 
-			    using (DbCommand cmd = conn.CreateCommand())
-			    {
-			      cmd.CommandText = CmdText;
-			    	cmd.CommandTimeout = Timeout;
+		    try
+		    {
+		        using (DbConnection conn = factory.CreateConnection())
+		        {
+		            if (conn != null)
+		            {
+		                conn.ConnectionString = ConnectionString;
 
-			      IDbDataAdapter adapter = factory.CreateDataAdapter();
+		                using (DbCommand cmd = conn.CreateCommand())
+		                {
+		                    cmd.CommandText = CmdText;
+		                    cmd.CommandTimeout = Timeout;
+
+		                    IDbDataAdapter adapter = factory.CreateDataAdapter();
 				
-			      if (adapter != null)
-			      {
-			        adapter.SelectCommand = cmd;
-			        adapter.Fill(ds);
-			      }
-			    }
-			  }
-			}
-			
+		                    if (adapter != null)
+		                    {
+		                        adapter.SelectCommand = cmd;
+		                        adapter.Fill(ds);
+		                    }
+		                }
+		            }
+		        }
+		    }
+		    catch (Exception ex)
+		    {
+		        _log.Error(m => m("There was a problem reading from the database: {0}\n", ex));
+		    }
+
 			return ds;
 		}
 	}

@@ -177,14 +177,23 @@ namespace DataExport
 
 			// if we haven't already returned...
 			// Include Password if it was provided
-			PrivateKeyFile[] keys = new[]
-			                        	{
-			                        			string.IsNullOrWhiteSpace(Password)
-			                        					? new PrivateKeyFile(KeyFile)
-			                        					: new PrivateKeyFile(KeyFile, Password)
-			                        	};
+		    try
+		    {
+		        PrivateKeyFile[] keys = new[]
+		            {
+		                string.IsNullOrWhiteSpace(Password)
+		                    ? new PrivateKeyFile(KeyFile)
+		                    : new PrivateKeyFile(KeyFile, Password)
+		            };
+                
+                return new SftpClientProxy(Hostname, Username, keys);
+            }
+		    catch (Exception ex)
+		    {
+		        _log.Error(m => m("There is a problem with the supplied authentication method:\n{0}", ex));
+		    }
 
-			return new SftpClientProxy(Hostname, Username, keys);
+		    return null;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -21,48 +22,9 @@ namespace DataExport.WS.Controllers
 	{
 		private ApplicationContext _appContext;
 		private ILog _log = LogManager.GetCurrentClassLogger();
-		// (ExporterConfig)ConfigurationManager.GetSection(ExporterConfig.GetSectionName())
-		// TODO: replace the following initializations with loading from config settings (above)
-		private static char[] trimChars = {',', ' '};
-		private IList<IExporter> _exporters = new List<IExporter>
-		                                      	{
-		                                      			new Exporter
-		                                      				{
-		                                      						Name = "maxient1",
-		                                      						Data = new SqlDataInput {CmdText = "SELECT * FROM vw_Maxient_Feed1"},
-																											Format = new CsvFormat
-																											         	{
-																											         			FieldSeparator = "|",
-																																		FieldTrimEndChars = trimChars,
-																																		FieldTrimLeadingChars = trimChars
-																											         	},
-																											Deliver = new SftpDelivery
-																											          	{
-																																		Hostname = "",
-																																		Destination = "",
-																																		Username = "",
-																																		KeyFile = "",
-																																		SaveFileCopy = false,
-																																	}
-																									},
-																								new Exporter
-																									{
-																											Name = "maxient2",
-																											Data = new SqlDataInput {CmdText = "SELECT * FROM vw_Maxient_Feed2 ORDER BY [SID], CourseID"},
-																											Format = new XslFormat
-																											         	{
-																											         			TemplateFile = "Maxient2.StudentSchedule.xslt"
-																											         	},
-																											Deliver = new SftpDelivery
-																											          	{
-																																		Hostname = "",
-																																		Destination = "",
-																																		Username = "",
-																																		KeyFile = "",
-																																		SaveFileCopy = false,
-																																	}
-																									}
-  	                                      	};
+
+	    private readonly DataExportConfig _config;
+	    private IList<Exporter> _exporters;
 
 
 		#region Initialization
@@ -74,12 +36,11 @@ namespace DataExport.WS.Controllers
 		/// functionality like populating <i>ViewBag.Version</i> with the <see cref="Version"/>
 		/// of the current MVC application.
 		/// </remarks>
-		public ApiController() : base(Assembly.GetExecutingAssembly())
+		public ApiController() : this(new ApplicationContext {BaseDirectory = AppDomain.CurrentDomain.BaseDirectory})
 		{
-			_appContext = new ApplicationContext {BaseDirectory = AppDomain.CurrentDomain.BaseDirectory};
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// 
 		/// </summary>
 		/// <remarks>
@@ -88,10 +49,13 @@ namespace DataExport.WS.Controllers
 		/// of the current MVC application.
 		/// </remarks>
 		public ApiController(ApplicationContext context) : base(Assembly.GetExecutingAssembly())
-		{
-			_appContext = context;
-		}
-		#endregion
+	    {
+            _appContext = context;
+            _config = ConfigurationManager.GetSection(DataExportConfig.GetSectionName()) as DataExportConfig;
+	        _exporters = _config.Exporters;
+	    }
+
+	    #endregion
 
 		/// <summary>
 		/// 
@@ -111,7 +75,7 @@ namespace DataExport.WS.Controllers
 		/// <returns></returns>
 		public ActionResult Export(string id)
 		{
-			IEnumerable<IExporter> exporters =  _exporters.Where(x => x.Name.ToUpper() == id.ToUpper());
+			IEnumerable<Exporter> exporters =  _exporters.Where(x => x.Name.ToUpper() == id.ToUpper());
 			int exporterCount = exporters.Count();
 			
 			if (exporterCount > 0)
@@ -120,7 +84,7 @@ namespace DataExport.WS.Controllers
 					_log.Warn(m => m("Multiple exporters found with the name '{0}' - only one will be used.", id));
 				}
 
-				IExporter exporter = exporters.Take(1).Single();
+				Exporter exporter = exporters.Take(1).Single();
 				exporter.Context = _appContext;
 
 				string csv = exporter.Export();

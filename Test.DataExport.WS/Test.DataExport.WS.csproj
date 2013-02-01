@@ -121,10 +121,12 @@
   <ItemGroup>
     <Compile Include="ApiControllerTests.cs" />
     <Compile Include="CsvFormatTests.cs" />
+    <Compile Include="DataExportConfigTest.cs" />
     <Compile Include="FilePathDeliveryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SftpDeliveryTest.cs" />
     <Compile Include="SqlDataInputTests.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="XslFormatTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +136,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="testkey.rsa" />
   </ItemGroup>

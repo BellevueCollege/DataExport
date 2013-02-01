@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Xml.Serialization;
 using Common.Logging;
 using CtcApi;
 
 namespace DataExport
 {
+    [XmlType("file")]
 	public class FilePathDelivery : DeliveryStrategy
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
@@ -23,14 +25,10 @@ namespace DataExport
 		/// <summary>
 		/// 
 		/// </summary>
-		public override string Destination{get;set;}
+        [XmlAttribute("destination")]
+        public override string Destination { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public bool SaveFileCopy { get; set; }
-
-		/// <summary>
+        /// <summary>
 		/// 
 		/// </summary>
 		/// <param name="writeMode"></param>

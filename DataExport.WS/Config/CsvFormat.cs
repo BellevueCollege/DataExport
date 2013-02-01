@@ -8,9 +8,9 @@ using DataExport.WS.Config;
 namespace DataExport.WS.Config
 {
 	[XmlType("csv")]
-	public class CsvFormat : IExportFormat
+	public class CsvFormat : ExportFormatStrategy
 	{
-		public ApplicationContext Context {get;set;}
+		public override ApplicationContext Context {get;set;}
 
 		#region .config properties
 		/// <summary>
@@ -66,7 +66,7 @@ namespace DataExport.WS.Config
 		/// </summary>
 		public char[] FieldTrimLeadingChars{get;set;}
 
-		public string Serialize(DataSet ds)
+		public override string Serialize(DataSet ds)
 		{
 			StringBuilder csv = new StringBuilder();
 
