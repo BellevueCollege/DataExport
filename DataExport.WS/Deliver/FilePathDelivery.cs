@@ -1,35 +1,41 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Common.Logging;
 using CtcApi;
 
 namespace DataExport
 {
-	public class FilePathDelivery : DeliveryBase, IDeliveryStrategy
+	public class FilePathDelivery : DeliveryStrategy
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ApplicationContext Context{get;set;}
+		public override ApplicationContext Context{get;set;}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public byte[] Source {get;set;}
+		public override byte[] Source {get;set;}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Destination{get;set;}
+		public override string Destination{get;set;}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool SaveFileCopy { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="writeMode"></param>
 		/// <returns></returns>
-		public bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Overwrite)
+		public override bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Overwrite)
 		{
 			if (string.IsNullOrWhiteSpace(Destination))
 			{

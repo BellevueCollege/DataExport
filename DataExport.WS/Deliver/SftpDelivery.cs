@@ -1,64 +1,82 @@
 ﻿using System;
 using System.IO;
+using System.Text;
+using System.Xml.Serialization;
 using Common.Logging;
 using CtcApi;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 using CtcApi.Extensions;
-using Tamir.SharpSsh;
-using Tamir.SharpSsh.java.io;
-using Tamir.SharpSsh.jsch;
-using Tamir.Streams;
-using Session = Renci.SshNet.Session;
-using String = Tamir.SharpSsh.java.String;
 
 namespace DataExport
 {
-	public class SftpDelivery : DeliveryBase, IDeliveryStrategy
+	[XmlType("sftp")]
+	public class SftpDelivery : DeliveryStrategy
 	{
 		private ILog _log = LogManager.GetCurrentClassLogger();
 		private ISftpClient _sftp;
+		private string _keyFile;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ApplicationContext Context{get;set;}
+		public override ApplicationContext Context{get;set;}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public byte[] Source {get;set;}
+		public override byte[] Source {get;set;}
+
+		#region .config properties
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlAttribute("destination")]
+		public override string Destination { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Destination{get;set;}
+		[XmlAttribute("host")]
+		public string Hostname { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Hostname{get;set;}
+		[XmlAttribute("username")]
+		public string Username { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Username{get;set;}
+		[XmlAttribute("password")]
+		public string Password { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Password{get;set;}
+		[XmlAttribute("keyFile")]
+		public string KeyFile
+		{
+			get { return _keyFile; }
+			set { _keyFile = value; }
+		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public string KeyFile{get;set;}
+		[XmlAttribute("saveCopy")]
+		public bool SaveFileCopy { get; set; }
+
+		#endregion
 
 		public SftpDelivery()
 		{
+			// set default values
+			SaveFileCopy = false;
 		}
 
-		public SftpDelivery(ISftpClient client)
+		public SftpDelivery(ISftpClient client) : this()
 		{
 			_log.Trace(m => m("Initializing SftpDelivery with an ISftpClient object."));
 			_sftp = client;
@@ -69,7 +87,7 @@ namespace DataExport
 		/// </summary>
 		/// <param name="writeMode"></param>
 		/// <returns></returns>
-		public bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Exception)
+		public override bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Exception)
 		{
 			if (SaveFileCopy)
 			{

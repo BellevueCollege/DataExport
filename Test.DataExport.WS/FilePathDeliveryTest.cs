@@ -67,9 +67,9 @@ namespace Test.DataExport.WS
 		public void Put_DestinationNull()
 		{
 			string fileContents = string.Format("heading1,date,heading3\ncol1,{0:d},column3\n", DateTime.Now);
-			byte[] data = DeliveryBase.ConvertToSource(fileContents);
+			byte[] data = FilePathDelivery.ConvertToSource(fileContents);
 
-			IDeliveryStrategy target = new FilePathDelivery
+			DeliveryStrategy target = new FilePathDelivery
 			                           	{
 			                           			Source = data
 			                           	};
@@ -83,9 +83,9 @@ namespace Test.DataExport.WS
 		public void Put_DestinationEmpty()
 		{
 			string fileContents = string.Format("heading1,date,heading3\ncol1,{0:d},column3\n", DateTime.Now);
-			byte[] data = DeliveryBase.ConvertToSource(fileContents);
+			byte[] data = FilePathDelivery.ConvertToSource(fileContents);
 
-			IDeliveryStrategy target = new FilePathDelivery
+			DeliveryStrategy target = new FilePathDelivery
 			                           	{
 			                           			Source = data,
 																			Destination = string.Empty
@@ -100,9 +100,9 @@ namespace Test.DataExport.WS
 		public void Put_InvalidDestinationPath()
 		{
 			string fileContents = string.Format("heading1,date,heading3\ncol1,{0:d},column3\n", DateTime.Now);
-			byte[] data = DeliveryBase.ConvertToSource(fileContents);
+			byte[] data = FilePathDelivery.ConvertToSource(fileContents);
 
-			IDeliveryStrategy target = new FilePathDelivery
+			DeliveryStrategy target = new FilePathDelivery
 			                           	{
 			                           			Source = data,
 																			Destination = @"t:\destination\does\not\exist"
@@ -116,11 +116,11 @@ namespace Test.DataExport.WS
 		public void Put_Overwrite()
 		{
 			string fileContents = string.Format("heading1,date,heading3\ncol1,{0:d},column3\n", DateTime.Now);
-			byte[] data = DeliveryBase.ConvertToSource(fileContents);
+			byte[] data = FilePathDelivery.ConvertToSource(fileContents);
 
 			string outputFile = Path.Combine(_outputFolder, "TestPut.csv");
 			
-			IDeliveryStrategy target = new FilePathDelivery
+			DeliveryStrategy target = new FilePathDelivery
 			                           	{
 			                           			Source = data,
 			                           			Destination = outputFile
@@ -137,11 +137,11 @@ namespace Test.DataExport.WS
 		public void Put_Ignore()
 		{
 			string fileContents = string.Format("heading1,date,heading3\ncol1,{0:d},column3\n", DateTime.Now);
-			byte[] data = DeliveryBase.ConvertToSource(fileContents);
+			byte[] data = FilePathDelivery.ConvertToSource(fileContents);
 
 			string outputFile = Path.Combine(_outputFolder, "TestPut.csv");
 			
-			IDeliveryStrategy target = new FilePathDelivery
+			DeliveryStrategy target = new FilePathDelivery
 			                           	{
 			                           			Source = data,
 			                           			Destination = outputFile
@@ -157,11 +157,11 @@ namespace Test.DataExport.WS
 		public void Put_Exception()
 		{
 			string fileContents = string.Format("heading1,date,heading3\ncol1,{0:d},column3\n", DateTime.Now);
-			byte[] data = DeliveryBase.ConvertToSource(fileContents);
+			byte[] data = FilePathDelivery.ConvertToSource(fileContents);
 
 			string outputFile = Path.Combine(_outputFolder, "TestPut.csv");
 			
-			IDeliveryStrategy target = new FilePathDelivery
+			DeliveryStrategy target = new FilePathDelivery
 			                           	{
 			                           			Source = data,
 			                           			Destination = outputFile

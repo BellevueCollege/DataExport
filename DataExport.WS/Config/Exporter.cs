@@ -23,8 +23,8 @@ namespace DataExport.WS.Config
 		[XmlElement(typeof(IDataInput))]
 		public IDataInput Data {get;set;}
 
-		[XmlElement(typeof(IDeliveryStrategy))]
-		public IDeliveryStrategy Deliver {get;set;}
+		[XmlElement(typeof(DeliveryStrategy))]
+		public DeliveryStrategy Deliver {get;set;}
 
 		/// <summary>
 		/// 
@@ -41,7 +41,7 @@ namespace DataExport.WS.Config
 
 			// Transmit the result to the specified destination 
 			Deliver.Context = Context;
-			Deliver.Source = DeliveryBase.ConvertToSource(text);
+			Deliver.Source = DeliveryStrategy.ConvertToSource(text);
 			_log.Info(m => m("Transmitting exported data via [{0}]...", Deliver));
 			Deliver.Put();
 

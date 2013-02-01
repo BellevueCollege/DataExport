@@ -60,9 +60,6 @@
     <Reference Include="CtcApi">
       <HintPath>..\packages\CtcApi.0.9.13.1\lib\net40\CtcApi.dll</HintPath>
     </Reference>
-    <Reference Include="DiffieHellman">
-      <HintPath>..\packages\DiffieHellman.1.0.0\lib\net40\DiffieHellman.dll</HintPath>
-    </Reference>
     <Reference Include="DotNetCasClient">
       <HintPath>..\packages\DotNetCasClient.1.0.1\lib\DotNetCasClient.dll</HintPath>
     </Reference>
@@ -71,9 +68,6 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Org.Mentalis.Security">
-      <HintPath>..\packages\Org.Mentalis.Security.1.0.0\lib\net40\Org.Mentalis.Security.dll</HintPath>
     </Reference>
     <Reference Include="Renci.SshNet">
       <HintPath>..\packages\SSH.NET.2012.12.3\lib\net40\Renci.SshNet.dll</HintPath>
@@ -121,16 +115,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Tamir.SharpSSH">
-      <HintPath>..\packages\Tamir.SharpSSH.1.1.1.13\lib\Tamir.SharpSSH.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\DataExportConfig.cs" />
     <Compile Include="Controllers\ApiController.cs" />
-    <Compile Include="Deliver\DeliveryBase.cs" />
     <Compile Include="Deliver\FilePathDelivery.cs" />
-    <Compile Include="Deliver\IDeliveryStrategy.cs" />
+    <Compile Include="Deliver\DeliveryStrategy.cs" />
     <Compile Include="Deliver\ISftpClient.cs" />
     <Compile Include="Deliver\SftpClientProxy.cs" />
     <Compile Include="Deliver\SftpDelivery.cs" />
