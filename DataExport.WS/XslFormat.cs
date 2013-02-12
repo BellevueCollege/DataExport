@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Data;
+using System.DirectoryServices.AccountManagement;
 using System.IO;
-using System.Reflection;
-using System.Text;
+using System.Security.Principal;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Xml.Xsl;
 using Common.Logging;
 using CtcApi;
-using DataExport.WS.Config;
 
 namespace DataExport.WS.Config
 {
@@ -18,8 +17,9 @@ namespace DataExport.WS.Config
 	{
 		protected const string TEMPLATE_FOLDER = "Templates";
 		private ILog _log = LogManager.GetCurrentClassLogger();
+	  private string _contextUser;
 
-		public override ApplicationContext Context {get;set;}
+	  public override ApplicationContext Context {get;set;}
 
 		#region .config properties
 		/// <summary>
@@ -31,7 +31,7 @@ namespace DataExport.WS.Config
 		/// <summary>
 		/// 
 		/// </summary>
-		[XmlAttribute("file")]
+    [XmlAttribute("templateFile")]
 		public string TemplateFile { get; set; }
 
 		#endregion
@@ -115,19 +115,63 @@ namespace DataExport.WS.Config
 		{
 			string xsltFilename = Path.IsPathRooted(TemplateFile) ? TemplateFile : Path.Combine(Context.BaseDirectory, TEMPLATE_FOLDER, TemplateFile);
 
-			using (FileStream fs = new FileStream(xsltFilename, FileMode.Open, FileAccess.Read))
-			{
-				XslCompiledTransform xslt = new XslCompiledTransform();
-				XmlReaderSettings xmlsettings = new XmlReaderSettings
-				                                	{
-				                                			ConformanceLevel = ConformanceLevel.Document
-				                                	};
+		  try
+		  {
+		    // open template file for reading while sharing it with other processes.
+		    using (FileStream fs = new FileStream(xsltFilename, FileMode.Open, FileAccess.Read, FileShare.Read))
+		    {
+		      XslCompiledTransform xslt = new XslCompiledTransform();
+		      XmlReaderSettings xmlsettings = new XmlReaderSettings
+		                                        {
+		                                          ConformanceLevel = ConformanceLevel.Document
+		                                        };
 
-				XmlReader reader = XmlReader.Create(fs, xmlsettings);
-				xslt.Load(reader);
+		      XmlReader reader = XmlReader.Create(fs, xmlsettings);
+		      xslt.Load(reader);
 			
-				return xslt;
-			}
+		      return xslt;
+		    }
+		  }
+		  catch (Exception exception)
+		  {
+		    _log.Error(m => m("User context '{0}' is unable to access template file '{1}'.", ContextUser, xsltFilename));
+		    throw;
+		  }
 		}
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// TODO: Move ContextUser functionality into <see cref="CtcApi.ApplicationContext"/>.
+	  protected string ContextUser
+	  {
+	    get
+	    {
+        if (string.IsNullOrWhiteSpace(_contextUser))
+        {
+          WindowsIdentity wic = WindowsIdentity.GetCurrent();
+          if (wic != null)
+          {
+            _contextUser = wic.Name;
+          }
+          else
+          {
+            UserPrincipal principal = UserPrincipal.Current;
+
+            if (!string.IsNullOrWhiteSpace(principal.UserPrincipalName))
+            {
+              _contextUser = principal.UserPrincipalName;
+            }
+            else
+            {
+              _contextUser = "*UNKNOWN*";
+            }
+
+          }
+        }
+
+	      return _contextUser;
+	    }
+	  }
 	}
 }
