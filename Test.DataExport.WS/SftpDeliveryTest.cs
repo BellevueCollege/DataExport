@@ -198,7 +198,6 @@ namespace Test.DataExport.WS
 			Assert.IsFalse(result, "File was delivered when should have been ignored.");
 		}
 
-
 	  // TODO: Write tests for additional scenarios (see FilePathDeliveryTest)
 
 	  #region Helper methods

@@ -163,5 +163,5 @@ namespace Test.DataExport.WS
 			}
 			Assert.AreEqual(string.Concat(expected, Environment.NewLine), actual);
 		}
-	}
+  }
 }

@@ -22,6 +22,8 @@ namespace DataExport
 		public string Hostname{get;set;}
 		public string Username{get;set;}
 		public PrivateKeyFile[] KeyFiles{get;set;}
+
+    public string Destination{get;set;}
 		#endregion
 
 		#region Constructors

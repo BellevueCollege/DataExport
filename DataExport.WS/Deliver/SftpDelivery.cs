@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Common.Logging;
 using CtcApi;
+using DataExport.Web;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 using CtcApi.Extensions;
@@ -13,11 +15,11 @@ namespace DataExport
 	[XmlType("sftp")]
 	public class SftpDelivery : DeliveryStrategy
 	{
-		private ILog _log = LogManager.GetCurrentClassLogger();
+	  private ILog _log = LogManager.GetCurrentClassLogger();
 		private ISftpClient _sftp;
 		private string _keyFile;
 
-		/// <summary>
+	  /// <summary>
 		/// 
 		/// </summary>
 		public override ApplicationContext Context{get;set;}
@@ -28,13 +30,7 @@ namespace DataExport
 		public override byte[] Source {get;set;}
 
 		#region .config properties
-		/// <summary>
-		/// 
-		/// </summary>
-		[XmlAttribute("destination")]
-		public override string Destination { get; set; }
-
-		/// <summary>
+	  /// <summary>
 		/// 
 		/// </summary>
 		[XmlAttribute("host")]

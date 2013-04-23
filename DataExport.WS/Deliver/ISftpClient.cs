@@ -22,5 +22,6 @@ namespace DataExport
 		string Hostname{get;set;}
 		string Username{get;set;}
 		PrivateKeyFile[] KeyFiles{get;set;}
+	  string Destination{get;set;}
 	}
 }
