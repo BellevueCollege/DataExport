@@ -55,7 +55,16 @@ namespace DataExport
 		public string KeyFile
 		{
 			get { return _keyFile; }
-			set { _keyFile = value; }
+			set
+      {
+			  _keyFile = value;
+
+        if (_sftp != null)
+        {
+          // make sure the underlying SFTP object is updated with any changes.
+          _sftp.KeyFiles = LoadKeys(_keyFile);
+        }
+			}
 		}
 
 		/// <summary>
@@ -158,16 +167,18 @@ namespace DataExport
 		{
 			if (_sftp != null)
 			{
-				_log.Trace(m => m("Using existing SFTP client object."));
+				_log.Trace(m => m("Using already existing SFTP client object."));
 				return _sftp;
 			}
 
+		  _log.Debug(m => m("Creating new SFTP client object."));
 			if (string.IsNullOrWhiteSpace(KeyFile))
 			{
 				if (string.IsNullOrWhiteSpace(Password))
 				{
 					throw new SshAuthenticationException("Password cannot be blank if no KeyFile is provided.");
 				}
+			  _log.Debug(m => m("Configuring SFTP for username/password."));
 				return new SftpClientProxy(Hostname, Username, Password);
 			}
 
@@ -175,12 +186,8 @@ namespace DataExport
 			// Include Password if it was provided
 		    try
 		    {
-		        PrivateKeyFile[] keys = new[]
-		            {
-		                string.IsNullOrWhiteSpace(Password)
-		                    ? new PrivateKeyFile(KeyFile)
-		                    : new PrivateKeyFile(KeyFile, Password)
-		            };
+		      _log.Trace(m => m("Configuring SFTP for keyfile '{0}'", KeyFile));
+		        PrivateKeyFile[] keys = LoadKeys(KeyFile);
                 
                 return new SftpClientProxy(Hostname, Username, keys);
             }
@@ -191,5 +198,20 @@ namespace DataExport
 
 		    return null;
 		}
+
+	  private PrivateKeyFile[] LoadKeys(string keyFile)
+	  {
+	    string file = Path.Combine(Context.BaseDirectory, keyFile);
+
+	    _log.Debug(m => m("Loading SSH key from file: '{0}'", file));
+
+	    PrivateKeyFile[] keys = new[]
+	                              {
+	                                string.IsNullOrWhiteSpace(Password)
+	                                  ? new PrivateKeyFile(file)
+	                                  : new PrivateKeyFile(file, Password)
+	                              };
+	    return keys;
+	  }
 	}
 }
