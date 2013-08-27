@@ -31,7 +31,16 @@
     <Content Include="Security\Roles\db_datawriter.sql">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Security\Users\CAMPUS_N216-E027543%24.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Security\Users\CAMPUS_N216J-E027168%24.sql">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Security\Users\CAMPUS_SSOUTHDT-N216K%24.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Security\Users\svc-datareader-dev.sql">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Views\dbo.vw_Maxient_Feed1.sql">
