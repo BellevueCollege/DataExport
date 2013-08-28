@@ -92,7 +92,7 @@ namespace DataExport
 		/// </summary>
 		/// <param name="writeMode"></param>
 		/// <returns></returns>
-		public override bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Exception)
+		public override bool Put(DeliveryWriteMode writeMode)
 		{
 			if (SaveFileCopy)
 			{

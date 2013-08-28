@@ -15,6 +15,7 @@ namespace DataExport
     protected const string TEMPLATE_PATTERN = @"{.+\|.+}";
     // property backers
     private string _destination;
+    private DeliveryWriteMode _writeMode = DeliveryWriteMode.Exception;
 
     /// <summary></summary>
     public abstract ApplicationContext Context { get; set; }
@@ -65,8 +66,34 @@ namespace DataExport
       }
     }
 
-    /// <summary></summary><param name="writeMode"></param><returns></returns>
-    public abstract bool Put(DeliveryWriteMode writeMode = DeliveryWriteMode.Exception);
+    /// <summary>
+    /// Whether or not to overwrite the file if it exists at the <see cref="Destination"/>
+    /// </summary>
+    /// <remarks>
+    ///   This value can be set in the application's .config file.
+    /// </remarks>
+    /// <returns><see cref="DeliveryWriteMode.Exception"/>, unless explicitly set otherwise.</returns>
+    [XmlAttribute(AttributeName = "writeMode")]
+    public DeliveryWriteMode WriteMode
+    {
+      get {return _writeMode;}
+      set {_writeMode = value;}
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public bool Put()
+    {
+      return Put(WriteMode);
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="writeMode"></param>
+    /// <returns></returns>
+    public abstract bool Put(DeliveryWriteMode writeMode);
 
     /// <summary>
     /// 
@@ -87,16 +114,19 @@ namespace DataExport
     /// <summary>
     /// Replace the existing target, if it exists
     /// </summary>
+    [XmlEnum("overwrite")]
     Overwrite,
 
     /// <summary>
     /// Throw an Exception if the target exists
     /// </summary>
+    [XmlEnum("exception")]
     Exception,
 
     /// <summary>
     /// Do nothing (do not overwrite the target)
     /// </summary>
+    [XmlEnum("ignore")]
     Ignore,
   }
 
