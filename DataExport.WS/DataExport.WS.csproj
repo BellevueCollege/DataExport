@@ -207,9 +207,20 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="_configSource\Authentication.config" />
+    <Content Include="_configSource\CasClient.config" />
+    <Content Include="_configSource\ConnectionStrings.config" />
+    <Content Include="_configSource\DataExport.config" />
+    <Content Include="_configSource\ElmahAuthorization.config" />
+    <Content Include="_configSource\EXAMPLE-Authentication.config" />
+    <Content Include="_configSource\EXAMPLE-CasClient.config" />
+    <Content Include="_configSource\EXAMPLE-ConnectionStrings.config" />
+    <Content Include="_configSource\EXAMPLE-DataExport.config" />
+    <Content Include="_configSource\EXAMPLE-ElmahAuthorization.config" />
+    <Content Include="_configSource\EXAMPLE-RoleManager.config" />
+    <Content Include="_configSource\RoleManager.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CtcApi\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
