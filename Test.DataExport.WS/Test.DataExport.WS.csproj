@@ -141,7 +141,12 @@
     </None>
     <None Include="packages.config" />
     <None Include="testkey.rsa" />
+    <None Include="_configSource\ConnectionStrings.config" />
+    <None Include="_configSource\DataExport.config" />
+    <None Include="_configSource\EXAMPLE-ConnectionStrings.config" />
+    <None Include="_configSource\EXAMPLE-DataExport.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(TargetDir)/SupportFiles"
