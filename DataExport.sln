@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.DataExport.WS", "Test.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D208C868-5CA4-4537-A074-1746417570D6}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		DataSetExample.xml = DataSetExample.xml
 	EndProjectSection
 EndProject
