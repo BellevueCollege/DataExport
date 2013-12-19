@@ -66,35 +66,41 @@ namespace Test.DataExport.WS
 			Assert.IsNotNull(actual);
 		}
 
-		[TestMethod]
-		[Ignore]	// This test connects to a live, production SSH server
-		public void TestExport_Maxient_Feed1_Demographics()
-		{
-			ApiController api = InitializeController();
-			ViewResult view = api.Export("maxient1") as ViewResult;
-			Assert.IsNotNull(view);
-			
-			object model = view.Model;
-			Assert.IsNotNull(model);
+	  #region Maxient export tests
+    // WARNING: These tests connect to a live, production SSH server
+    // These tests also rely on properly-configured <exporter> blocks.
 
-			bool result = Boolean.Parse(model.ToString());
-			Assert.IsTrue(result, "Export call reports a failure.");
-		}
+	  [TestMethod]
+	  [Ignore] // This test connects to a live, production SSH server
+	  public void TestExport_Maxient_Feed1_Demographics()
+	  {
+	    ApiController api = InitializeController();
+	    ViewResult view = api.Export("maxient1") as ViewResult;
+	    Assert.IsNotNull(view);
 
-		[TestMethod]
-		[Ignore]	// This test connects to a live, production SSH server
-		public void TestExport_Maxient_Feed2_Schedule()
-		{
-			ApiController api = InitializeController();
-			ViewResult view = api.Export("maxient2") as ViewResult;
-			Assert.IsNotNull(view);
-			
-			object model = view.Model;
-			Assert.IsNotNull(model);
+	    object model = view.Model;
+	    Assert.IsNotNull(model);
 
-			bool result = Boolean.Parse(model.ToString());
-			Assert.IsTrue(result, "Export call reports a failure.");
-		}
+	    bool result = Boolean.Parse(model.ToString());
+	    Assert.IsTrue(result, "Export call reports a failure.");
+	  }
+
+	  [TestMethod]
+	  [Ignore] // This test connects to a live, production SSH server
+	  public void TestExport_Maxient_Feed2_Schedule()
+	  {
+	    ApiController api = InitializeController();
+	    ViewResult view = api.Export("maxient2") as ViewResult;
+	    Assert.IsNotNull(view);
+
+	    object model = view.Model;
+	    Assert.IsNotNull(model);
+
+	    bool result = Boolean.Parse(model.ToString());
+	    Assert.IsTrue(result, "Export call reports a failure.");
+	  }
+
+	  #endregion
 
 		#endregion
 

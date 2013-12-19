@@ -139,18 +139,24 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EXAMPLE-testkey.rsa" />
     <None Include="packages.config" />
     <None Include="testkey.rsa" />
+    <None Include="_configSource\AppSettings.config" />
     <None Include="_configSource\ConnectionStrings.config" />
     <None Include="_configSource\DataExport.config" />
+    <None Include="_configSource\EXAMPLE-AppSettings.config" />
     <None Include="_configSource\EXAMPLE-ConnectionStrings.config" />
     <None Include="_configSource\EXAMPLE-DataExport.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir "$(TargetDir)/SupportFiles"
-xcopy /y "$(ProjectDir)testkey.rsa" "$(TargetDir)SupportFiles"</PostBuildEvent>
+    <PostBuildEvent>mkdir "$(TargetDir)SupportFiles"
+xcopy /y "$(ProjectDir)testkey.rsa" "$(TargetDir)SupportFiles"
+
+mkdir "$(TargetDir)\_configSource"
+xcopy /y "$(ProjectDir)_configSource\*.config" "$(TargetDir)_configSource"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

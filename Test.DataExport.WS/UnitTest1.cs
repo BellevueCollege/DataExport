@@ -11,6 +11,12 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+/*
+ * NOTE: This file only exists to help research better ways to use .NET configuration syntax
+ * to better be able to configure exporters without requiring changes to the code.
+ * If you have questions, contact shawn.south@bellevuecollege.edu
+ */
+
 namespace Test.DataExport.WS
 {
     [TestClass]

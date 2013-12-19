@@ -70,9 +70,6 @@ namespace Test.DataExport.WS
         /// <summary>
         ///A test for Exporters
         ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
         public void DataExportConfig_Loaded()
         {
