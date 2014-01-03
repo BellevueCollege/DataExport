@@ -64,6 +64,7 @@ namespace Test.DataExport.WS
 		/// 
 		///</summary>
 		[TestMethod]
+    [Ignore]  // TODO: Refactor this test to use a generic XSL transform
 		public void SerializeToMaxientStudentSchedules()
 		{
 			XslFormat formatter = new XslFormat();
