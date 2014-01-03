@@ -2,7 +2,7 @@
 
 The **DataExport** tool is a web service that can be configured to collect, format and deliver internal data
 to 3rd-party vendors. It is intended to be run from inside the network of organization who is providing the
-data.
+data (e.g. the college).
 
 ## Requirements
 
@@ -38,12 +38,12 @@ so that the app is hosted at http://localhost/dataexport. **CAS login WILL NOT w
 
 #### Important files/folders
 
-+ **_configSource** - Location for configuration settings that are specific to your organization. Use the *EXAMPLE-___.config* files as I guide to creating your own. The *Web.config* file contains references to these files, and **the application will not run without them**.
++ **_configSource** - Location for configuration settings that are specific to your organization. Use the *EXAMPLE-___.config* files as a guide to creating your own. The *Web.config* file contains references to these files, and **the application will not run without them**.
 + **SupportFiles** - Location for files needed for the application, such as SSH keys.
 + **Templates** - The application will look here for XSLT files used in formatting data.
 
 ### Test.DataExport.WS
 
-TODO
+The project contains unit tests for the **DataExport.WS** project.
 
 ## See also
