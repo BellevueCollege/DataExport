@@ -38,7 +38,7 @@ so that the app is hosted at http://localhost/dataexport. **CAS login WILL NOT w
 
 #### Important files/folders
 
-+ **_configSource** - Location for configuration settings that are specific to your organization. Use the *EXAMPLE-___.config* files as a guide to creating your own. The *Web.config* file contains references to these files, and **the application will not run without them**.
++ **_configSource** - Location for configuration settings that are specific to your organization. Use the *EXAMPLE-___.config* files as a guide to creating your own. The *Web.config* file contains references to these files, and **the application WILL NOT run without them**.
 + **SupportFiles** - Location for files needed for the application, such as SSH keys.
 + **Templates** - The application will look here for XSLT files used in formatting data.
 
@@ -46,4 +46,13 @@ so that the app is hosted at http://localhost/dataexport. **CAS login WILL NOT w
 
 The project contains unit tests for the **DataExport.WS** project.
 
+The unit tests for SFTP delivery make use of the [Moq framework](https://github.com/Moq/moq4/wiki/Quickstart) to create [mock objects](https://en.wikipedia.org/wiki/Mock_object) which simulate actual SFTP transfers. This helps accomplish the following:
+
++ Speeds up the execution of unit tests, as they are not having to actually traverse network resources.
++ Eliminates false negatives due to network issues that may be out of the developer's control.
++ Eliminates reliance on tests coded to organization-specific settings.
++ Removed organization-specific code and configuration from the project.
+
 ## See also
+
++ [BellevueCollege/CtcApi](https://github.com/BellevueCollege/CtcApi) library.
