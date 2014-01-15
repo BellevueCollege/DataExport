@@ -10,7 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		DataSetExample.xml = DataSetExample.xml
 		LICENSE.txt = LICENSE.txt
-		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{596CF2E3-0E3C-47CC-A161-0A910B38ED71}") = "DataExport.DB", "DataExport.DB\DataExport.DB.rgproj", "{79B88284-2BFA-4830-9B47-BB3C830438F2}"
